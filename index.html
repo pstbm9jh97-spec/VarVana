@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>VarVana: услуги творчества</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #fff0f5, #ffe6f2, #fff8e1, #ffe4e1);
+            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 700px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        /* Шапка сайта */
+        .site-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            border: 4px solid #ff69b4;
+            padding: 12px 20px;
+            box-shadow: 0 4px 12px rgba(255, 105, 180, 0.2);
+            margin-bottom: 25px;
+        }
+        .header-left {
+            text-align: left;
+        }
+        .nickname {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #ff1493;
+            letter-spacing: 1px;
+        }
+        .sub-title {
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 4px;
+        }
+        .header-right {
+            text-align: right;
+        }
+        .nav-links a {
+            color: #ff69b4;
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 16px;
+            font-size: 1rem;
+        }
+        .nav-links a:hover {
+            color: #d63384;
+        }
+
+        h1, h2, h3 {
+            color: #ff69b4;
+            text-align: center;
+        }
+        h1 { font-size: 1.6rem; letter-spacing: 2px; margin-top: 0; }
+        h2 { font-size: 1.4rem; margin-top: 35px; }
+        h3 { font-size: 1.2rem; }
+        
+        .intro-box {
+            text-align: center;
+            line-height: 1.7;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(255, 105, 180, 0.15);
+            border: 1px solid #ffb6c1;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+        .btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(255, 105, 180, 0.15);
+            flex: 1 1 200px;
+            text-align: center;
+        }
+        .btn-about {
+            background: rgba(255, 105, 180, 0.15);
+            color: #ff69b4;
+            border: 1px solid #ffb6c1;
+        }
+        .btn-about:hover {
+            background: #ff69b4;
+            color: white;
+            transform: translateY(-3px);
+        }
+        .btn-tips {
+            background: rgba(255, 222, 242, 0.8);
+            color: #d63384;
+            border: 1px solid #ffe6f2;
+        }
+        .btn-tips:hover {
+            background: #ffe6f2;
+            color: #c81e6b;
+            transform: translateY(-3px);
+        }
+        .btn-main {
+            background: #fff;
+            color: #ff69b4;
+            border: 2px solid #ff69b4;
+            font-weight: bold;
+            flex: 1 1 100%;
+            margin-top: 25px;
+        }
+        .btn-main:hover {
+            background: #ff69b4;
+            color: white;
+            transform: scale(1.03);
+        }
+
+        .hidden-text {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            border-left: 4px solid #ff69b4;
+            text-align: center;
+            color: #555;
+            font-size: 1rem;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .example-card {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ffe6f2;
+            box-shadow: 0 4px 8px rgba(255, 105, 180, 0.1);
+        }
+        .placeholder-img {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            opacity: 0.8;
+        }
+        .price-tag {
+            font-size: 0.9rem;
+            color: #ff69b4;
+            font-weight: bold;
+        }
+
+        ul { list-style: none; padding: 0; }
+        li {
+            padding: 14px 0;
+            border-bottom: 1px dashed #ffb6c1;
+        }
+        .price { color: #ff1493; font-weight: bold; }
+
+        .footer-note {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            border: 1px dashed #ffb6c1;
+        }
+
+        .contact-info {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+            margin-top: 30px;
+            text-align: center;
+        }
+        .note {
+            font-size: 13px;
+            color: #999;
+            text-align: center;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Шапка сайта -->
+    <header class="site-header">
+        <div class="header-left">
+            <div class="nickname">VarVana</div>
+            <div class="sub-title">услуги творчества</div>
+        </div>
+        <div class="header-right">
+            <nav class="nav-links">
+                <a href="#video">видео</a>
+                <a href="#arts">арты</a>
+                <a href="#voice">озвучка</a>
+            </nav>
+        </div>
+    </header>
+
+    <h1>Привет 🤍</h1>
+
+    <div class="intro-box">
+        Если ты оказался на этом сайте — поверь, это намёки судьбы!💡<br><br>
+        Ведешь блог в соцсетях, но нужен монтажёр? 🎧<br>
+        Ты по адресу! 💘<br><br>
+        Хочешь красивый арт, озвучку или уютный сайт? 🛍️<br>
+        Барабанная дробь… 🥁<br>
+        Ты снова по адресу! 🫶🏻<br><br>
+        Заинтересовала? Смотри ниже. 🎀<br>
+        А если хочешь узнать, как я вообще к этому пришла — жми на кнопочки. 🧸
+    </div>
+
+    <!-- Кнопки -->
+    <div class="btn-group">
+        <button class="btn btn-about" onclick="toggleText('about')">Про меня 💘</button>
+        <button class="btn btn-tips" onclick="toggleText('tips')">Мои фишки 🎀</button>
+    </div>
+
+    <!-- Скрытый текст "Про меня" -->
+    <div id="about" class="hidden-text">
+        Знаешь, я начала монтировать просто для себя — чтобы из 10 минут прогулки сделать 30 секунд красивого ролика с классной музыкой. И когда друзья стали просить: «А мне тоже так сделай», поняла, что это кайф — помогать другим видеть себя красиво. 💘<br><br>
+        Для меня самое важное — чтобы в ролике чувствовалась твоя эмоция, а не просто нарезка кадров. 🤍
+    </div>
+
+    <!-- Скрытый текст "Мои фишки" -->
+    <div id="tips" class="hidden-text">
+        Вот что я люблю добавлять в свои работы, чтобы они цепляли:<br>
+        ✨ Переход «бум» — он даёт тот самый эффект «вау» в начале.<br>
+        ✨ Подбираю музыку не по шаблону, а под настроение ролика.<br>
+        ✨ В артах стараюсь сохранить твой узнаваемый стиль — чтобы это был именно ты, только в красивой рисовке. 🧸<br>
+        ✨ А в озвучке умею попадать в интонацию: могу спокойно, могу дерзко, могу как вредный блогер — под любой стиль. 🎤
+    </div>
+
+    <h2>Что я обычно делаю</h2>
+    <p style="text-align: center; color: #555;">
+        Это примеры моих любимых форматов. Когда появятся реальные работы, я просто заменю эти квадратики на фото! 🎀
+    </p>
+
+    <!-- Карточки-примеры -->
+    <div class="examples-grid">
+        <div class="example-card">
+            <div class="placeholder-img">
+                Кадр из монтажа
+            </div>
+            <h3>Короткий ролик</h3>
+            <p style="font-size: 0.9rem; color: #555;">
+                TikTok, сторис, Reels. Люблю делать их динамичными, но не дёргаными.
+            </p>
+            <div class="price-tag">от 100 ₽</div>
+        </div>
+        <div class="example-card">
+            <div class="placeholder-img">
+                Арт-скетч
+            </div>
+            <h3>Арт / Аватарка</h3>
+            <p style="font-size: 0.9rem; color: #555;">
+                Рисую в милом стиле: мягкие линии, пастельные тени, акцент на эмоциях.
+            </p>
+            <div class="price-tag">от 300 ₽</div>
+        </div>
+        <div class="example-card">
+            <div class="placeholder-img">
+                Длинный ролик
+            </div>
+            <h3>Длинный ролик</h3>
+            <p style="font-size: 0.9rem; color: #555;">
+                От 1 до 10 минут. Мини‑фильм, обзор, влог — сделаю так, чтобы смотреть не хотелось отрываться.
+            </p>
+            <div class="price-tag">500–5000 ₽</div>
+        </div>
+        <div class="example-card">
+            <div class="placeholder-img">
+                Озвучка
+            </div>
+            <h3>Озвучка</h3>
+            <p style="font-size: 0.9rem; color: #555;">
+                Могу спокойно, дерзко или как вредный блогер. Под любой стиль и любой хронометраж.
+            </p>
+            <div class="price-tag">100–500 ₽</div>
+        </div>
+        <div class="example-card">
+            <div class="placeholder-img">
+                Топовый сайт
+            </div>
+            <h3>Сайт</h3>
+            <p style="font-size: 0.9rem; color: #555;">
+                Сделаю в миллион раз круче этого шаблона. Уютно, стильно, под тебя.
+            </p>
+            <div class="price-tag">200–7000 ₽</div>
+        </div>
+    </div>
+
+    <h2>Прайс</h2>
+    <ul>
+        <li>
+            <strong>Короткий ролик 📱 (15–60 сек)</strong> — <span class="price">100–500 ₽</span><br>
+            Для TikTok, Likee или сторис в Telegram. 🛒<br>
+            Полностью на твой заказ. 🎀
+        </li>
+        <li>
+            <strong>Длинный ролик (1–10 минут)</strong> — <span class="price">500–5000 ₽</span><br>
+            Хочешь бьюти‑блог, хочешь мини‑фильм — всё на твой вкус. ☕️
+        </li>
+        <li>
+            <strong>Арт / аватарка</strong> — <span class="price">300–5000 ₽</span><br>
+            Цена зависит от прорисовки и деталей. Всё обсудим при заказе. 🧸💗
+        </li>
+        <li>
+            <strong>Озвучка🎤</strong> — <span class="price">100–500 ₽</span><br>
+            Могу под любой стиль: спокойно, дерзко, с характером. Сделаю так, что голос будет идеально попадать в картинку.
+        </li>
+        <li>
+            <strong>Сайт</strong> — <span class="price">200–7000 ₽</span><br>
+            Сделаю такой, что ты сам себе позавидуешь. В миллион раз круче шаблона — честно. 👹
+        </li>
+    </ul>
+
+    <button class="btn btn-main" onclick="alert('Спасибо! По вопросам оплаты пиши на телефон или в Telegram.')">
+        По вопросам оплаты — жми сюда! 💘
+    </button>
+
+    <div class="footer-note">
+        Только начинаю своё дело и иду к цели: 50 тысяч рублей. 😱🤍<br><br>
+        Всё впереди, и это пока только мечты.<br><br>
+        Но отдельное спасибо ТЕБЕ! Да, возможно, ты не захочешь что-либо покупать, или тебе это просто не нужно. Но ты только что долистал до конца сайта и читаешь этот текст — я это очень ценю. 🤍<br><br>
+        Спасибки. 🫶🏻
+    </div>
+
+    <div class="contact-info">
+        Оплата — переводом, после выполнения заказа. 🤍<br><br>
+        Телефон для вопросов и договоров: <strong>+7 905 329 28 74</strong><br>
+        По поводу заказов писать в Telegram: <strong>@Angelocheksin</strong>
+    </div>
+
+         <p class="note">
+            Спасибки за внимание! ❤️‍🔥
+        </p>
+
+        <script>
+            function toggleText(id) {
+                const element = document.getElementById(id);
+                const isVisible = element.style.display === 'block';
+                
+                document.querySelectorAll('.hidden-text').forEach(el => {
+                    el.style.display = 'none';
+                });
+                
+                if (!isVisible) {
+                    element.style.display = 'block';
+                    window.scrollTo({
+                        top: element.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        </script>
+    </body>
+</html>
