@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VarVana — Luxury Merch Collection</title>
+  <title>VarVana — Luxury Collection</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --bg-dark: #050505;
-      --card-bg: #0b0b0b;
+      --bg-dark: #030303;
+      --card-bg: #0a0a0a;
       --gold: #cfa755;
-      --gold-glow: 0 0 35px rgba(207, 167, 85, 0.7);
-      --border: #222;
-      --text-main: #fff;
-      --shadow-card: 0 20px 50px rgba(0,0,0,0.6);
-      --shadow-hover: 0 40px 90px rgba(0,0,0,0.8);
+      --gold-glow: 0 0 40px rgba(207, 167, 85, 0.6);
+      --border: #1f1f1f;
+      --text-main: #ffffff;
+      --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.7);
+      --shadow-hover: 0 35px 70px rgba(0, 0, 0, 0.85);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -22,840 +22,636 @@
       color: var(--text-main);
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       overflow-x: hidden;
-      line-height: 1.6;
+      line-height: 1.5;
     }
     a { text-decoration: none; color: inherit; }
 
-    /* ОБЪЁМНЫЙ ФОН И ЗОЛОТЫЕ ЛИНИИ */
+    /* Фон и линии */
     .bg-volume {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       z-index: 0; pointer-events: none;
-      background: radial-gradient(circle at 50% 50%, #111 0%, #000 100%);
+      background: radial-gradient(circle at 50% 50%, #080808 0%, #000 100%);
     }
     .line-gold {
       position: fixed; z-index: 1; pointer-events: none;
       filter: drop-shadow(0 0 25px rgba(207,167,85,0.9));
-      opacity: 0.5;
+      opacity: 0.4;
     }
-    .line-h { height: 2px; background: rgba(207,167,85,0.6); }
-    .line-v { width: 2px; background: rgba(207,167,85,0.6); }
+    .line-h { height: 1px; background: rgba(207,167,85,0.5); }
+    .line-v { width: 1px; background: rgba(207,167,85,0.5); }
 
     header {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 30px 80px; border-bottom: 1px solid var(--border);
+      padding: 24px 60px; border-bottom: 1px solid var(--border);
       position: sticky; top: 0; z-index: 2000;
-      background: rgba(5,5,5,0.95); backdrop-filter: blur(20px);
-      box-shadow: 0 15px 60px rgba(0,0,0,0.7);
+      background: rgba(3,3,3,0.92); backdrop-filter: blur(16px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.7);
     }
     .logo {
-      font-size: 48px; font-weight: 900; letter-spacing: 6px;
+      font-size: 42px; font-weight: 900; letter-spacing: 5px;
       color: white; text-shadow: var(--gold-glow); position: relative;
     }
     .logo::after {
-      content: ''; position: absolute; bottom: -6px; left: 0;
-      width: 90%; height: 3px; background: var(--gold);
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 85%; height: 2px; background: var(--gold);
       box-shadow: var(--gold-glow);
     }
-    nav ul { display: flex; gap: 50px; }
-    nav a { color: #888; font-weight: 700; transition: 0.3s; }
+    nav ul { display: flex; gap: 36px; }
+    nav a { color: #999; font-weight: 700; transition: 0.3s; }
     nav a:hover { color: var(--gold); text-shadow: var(--gold-glow); }
 
-    main { padding: 60px 40px; position: relative; z-index: 2; min-height: 100vh; }
+    .cart-btn-wrapper { position: relative; }
+    .cart-btn {
+      background: transparent; border: 1px solid #2a2a2a;
+      color: #ccc; padding: 10px 20px; border-radius: 14px;
+      font-weight: 800; cursor: pointer; transition: all 0.3s;
+      display: flex; align-items: center; gap: 8px; font-size: 15px;
+    }
+    .cart-btn:hover {
+      border-color: var(--gold); color: white; box-shadow: var(--gold-glow);
+    }
+    .cart-count {
+      position: absolute; top: -8px; right: -10px;
+      background: var(--gold); color: #000; font-size: 13px;
+      width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800;
+    }
+
+    main { padding: 48px 40px; position: relative; z-index: 2; min-height: 100vh; }
 
     /* HERO */
     .hero {
-      max-width: 1200px; margin: 140px auto; text-align: center;
-      padding: 140px 60px; background: #0f0f0f;
-      border: 1px solid var(--border); border-radius: 60px;
-      box-shadow: 0 50px 120px rgba(0,0,0,0.8); position: relative; overflow: hidden;
+      max-width: 1100px; margin: 120px auto; text-align: center;
+      padding: 120px 50px; background: #0b0b0b;
+      border: 1px solid var(--border); border-radius: 56px;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.8); position: relative; overflow: hidden;
     }
     .hero::before {
-      content: ''; position: absolute; top: -50%; left: -40%; width: 160%; height: 200%;
-      background: linear-gradient(135deg, rgba(207,167,85,0.1), transparent);
-      transform: rotate(-30deg); z-index: 0; opacity: 0.4;
+      content: ''; position: absolute; top: -40%; left: -30%; width: 150%; height: 180%;
+      background: linear-gradient(135deg, rgba(207,167,85,0.08), transparent);
+      transform: rotate(-25deg); z-index: 0; opacity: 0.5;
     }
     .hero h1 {
-      font-size: 110px; line-height: 0.9; color: white; margin-bottom: 40px;
+      font-size: 96px; line-height: 0.95; color: white; margin-bottom: 32px;
       font-weight: 900; position: relative; z-index: 2;
-      text-shadow: 0 0 80px rgba(255,255,255,0.3);
+      text-shadow: 0 0 60px rgba(255,255,255,0.4);
     }
     .hero p {
-      color: #aaa; max-width: 800px; margin: 0 auto 60px; font-size: 26px;
+      color: #aaa; max-width: 720px; margin: 0 auto 48px; font-size: 22px;
       position: relative; z-index: 2;
     }
     .badge-elite {
-      display: inline-block; padding: 22px 60px;
+      display: inline-block; padding: 16px 44px;
       background: var(--gold); color: #000; font-weight: 800;
-      text-transform: uppercase; border-radius: 100px; box-shadow: var(--gold-glow);
-      margin-bottom: 60px; letter-spacing: 4px;
+      text-transform: uppercase; border-radius: 80px; box-shadow: var(--gold-glow);
+      margin-bottom: 48px; letter-spacing: 3px;
     }
     .cta-buttons {
-      display: flex; gap: 40px; justify-content: center; flex-wrap: wrap;
+      display: flex; gap: 28px; justify-content: center; flex-wrap: wrap;
     }
     .btn {
-      padding: 24px 75px; border-radius: 20px; font-weight: 800;
-      transition: all 0.4s cubic-bezier(0.25,1,0.5,1); cursor: pointer;
-      font-size: 20px; position: relative; overflow: hidden;
+      padding: 16px 36px; border-radius: 18px; font-weight: 800;
+      transition: all 0.35s cubic-bezier(0.25,1,0.5,1); cursor: pointer;
+      font-size: 17px; position: relative; overflow: hidden;
     }
     .btn::after {
       content: ''; position: absolute; top: 0; left: 0; width: 0%; height: 100%;
-      background: rgba(0,0,0,0.4); transition: width 0.4s;
+      background: rgba(0,0,0,0.3); transition: width 0.35s;
     }
     .btn:hover::after { width: 100%; }
-    .btn-gold { background: var(--gold); color: #000; box-shadow: var(--gold-glow); z-index: 2; }
-    .btn-gold:hover { transform: translateY(-12px); box-shadow: 0 40px 80px rgba(207,167,85,0.8), var(--gold-glow); }
+    .btn-gold { background: var(--gold); color: #000; box-shadow: var(--gold-glow); }
     .btn-outline { background: transparent; border: 1px solid #333; color: white; }
-    .btn-outline:hover { border-color: var(--gold); color: var(--gold); box-shadow: var(--gold-glow); }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
 
-    /* TIMER BAR */
-    .timer-bar {
-      max-width: 1200px; margin: 100px auto; padding: 45px;
-      background: #111; border: 1px solid var(--border);
-      border-radius: 40px; display: flex; justify-content: space-around;
-      align-items: center; gap: 40px; box-shadow: 0 30px 80px rgba(0,0,0,0.7);
-    }
-    .time-item { text-align: center; }
-    .time-digit {
-      font-size: 72px; font-weight: 900; color: white; letter-spacing: 5px;
-      text-shadow: 0 0 40px rgba(255,255,255,0.4);
-    }
-    .time-label {
-      color: var(--gold); font-size: 18px; text-transform: uppercase;
-      font-weight: 900; letter-spacing: 3px;
-    }
-
-    section { max-width: 1200px; margin: 160px auto; text-align: center; }
     .section-title {
-      font-size: 80px; color: white; margin-bottom: 90px; font-weight: 900;
-      position: relative; text-shadow: 0 0 50px rgba(255,255,255,0.3);
+      font-size: 64px; color: white; margin-bottom: 60px; font-weight: 900;
+      text-align: center; text-shadow: 0 0 30px rgba(255,255,255,0.3);
     }
 
-    /* TABS */
-    .tabs {
-      display: flex; justify-content: center; gap: 35px; margin-bottom: 80px; flex-wrap: wrap;
-    }
-    .tab-btn {
-      padding: 24px 65px; background: #151515; border: 1px solid var(--border);
-      color: #999; border-radius: 20px; cursor: pointer; font-size: 20px;
-      font-weight: 800; transition: all 0.35s; position: relative;
-    }
-    .tab-btn.active {
-      background: var(--gold); color: #000; border-color: var(--gold);
-      box-shadow: var(--gold-glow); transform: scale(1.08);
-    }
-    .tab-btn:hover:not(.active) { border-color: #555; color: white; }
-
-    /* PRODUCTS GRID */
+    /* CATALOG */
     .products-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 50px;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 36px;
     }
     .product-card {
-      background: var(--card-bg); padding: 50px; border-radius: 30px;
-      border: 1px solid var(--border); text-align: center; position: relative;
-      transform: translateY(0); transition: transform 0.4s, box-shadow 0.4s;
-      box-shadow: var(--shadow-card);
+      background: var(--card-bg); padding: 30px; border-radius: 24px;
+      border: 1px solid var(--border); position: relative; overflow: hidden;
+      box-shadow: var(--shadow-card); transition: transform 0.35s, box-shadow 0.35s;
     }
-    .product-card:hover {
-      transform: translateY(-20px); box-shadow: var(--shadow-hover);
-    }
+    .product-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-hover); }
     .prod-img {
-      width: 100%; height: 360px; background: #1a1a1a; border-radius: 24px;
-      margin-bottom: 30px; display: flex; align-items: center; justify-content: center;
-      color: #666; border: 3px dashed #444; position: relative;
+      width: 100%; height: 300px; background: #121212;
+      border-radius: 16px; margin-bottom: 24px; display: flex;
+      align-items: center; justify-content: center; color: #555;
+      font-size: 52px;
     }
-    .prod-img i { font-size: 80px; color: var(--gold); }
-    .prod-title {
-      font-size: 32px; color: white; margin-bottom: 20px; font-weight: 800;
-    }
-    .prod-price {
-      color: var(--gold); font-weight: 900; font-size: 30px; margin-bottom: 30px;
-    }
+    .prod-title { font-size: 22px; color: white; margin-bottom: 12px; font-weight: 800; }
+    .prod-price { color: var(--gold); font-size: 20px; font-weight: 800; margin-bottom: 14px; }
+    .prod-desc { color: #999; font-size: 15px; margin-bottom: 24px; line-height: 1.4; }
     .buy-btn {
-      padding: 20px 70px; background: white; color: #000;
-      border-radius: 16px; font-weight: 800; cursor: pointer; box-shadow: var(--gold-glow);
-      width: 100%; text-align: center;
+      width: 100%; padding: 14px; background: transparent;
+      border: 1px solid #222; color: white; border-radius: 12px;
+      font-weight: 800; cursor: pointer; transition: all 0.3s;
+      font-size: 15px;
     }
-    .buy-btn:hover { transform: scale(1.06); box-shadow: 0 30px 60px rgba(207,167,85,0.7); }
+    .buy-btn:hover { border-color: var(--gold); color: var(--gold); }
 
-    /* REVIEWS */
-    .reviews-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 60px;
+    /* ABOUT / АВТОР */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; } }
+    .about-text h3 { font-size: 40px; color: white; margin-bottom: 24px; font-weight: 800; }
+    .about-text p { color: #aaa; margin-bottom: 24px; font-size: 18px; }
+    .placeholder-box {
+      border: 1px dashed #333; background: #0f0f0f; color: #666;
+      min-height: 240px; display: flex; align-items: center;
+      justify-content: center; border-radius: 16px; font-style: italic;
     }
-    .review-card {
-      background: #131313; padding: 60px; border-radius: 32px;
-      border: 1px solid var(--border); text-align: left; position: relative;
+    .contact-placeholder {
+      border: 1px dashed #333; background: #0f0f0f; color: #666;
+      min-height: 80px; display: flex; align-items: center;
+      justify-content: center; border-radius: 12px; margin-top: 12px;
     }
-    .review-header { display: flex; align-items: center; gap: 28px; margin-bottom: 28px; }
-    .avatar {
-      width: 90px; height: 90px; background: #222; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; color: var(--gold);
-      font-weight: 900; font-size: 42px; border: 5px solid var(--gold);
-    }
-    .review-author { color: white; font-weight: 800; }
-    .stars { color: var(--gold); margin-left: 14px; }
-    .likes-count {
-      color: #aaa; font-size: 16px; margin-top: 12px; font-weight: 600;
-    }
-    .likes-count i { color: var(--gold); }
-    .review-text { color: #bbb; font-size: 18px; line-height: 1.7; }
 
-    /* FAQ ACCORDION */
-    .faq-item {
-      border: 1px solid var(--border); border-radius: 24px; overflow: hidden;
-      margin-bottom: 24px; background: #141414;
-    }
-    .faq-header {
-      padding: 35px 50px; cursor: pointer; display: flex;
-      justify-content: space-between; align-items: center; color: white;
-      font-size: 22px; position: relative;
-    }
-    .faq-header:hover { background: rgba(207,167,85,0.06); }
-    .faq-icon { transition: transform 0.35s; }
-    .faq-header.open .faq-icon { transform: rotate(180deg); }
-    .faq-content {
-      max-height: 0; opacity: 0; overflow: hidden; padding: 0 50px;
-      transition: max-height 0.45s ease, opacity 0.45s;
-    }
-    .faq-content.open {
-      max-height: 400px; opacity: 1; padding: 20px 50px 40px;
-    }
-    .faq-text { color: #aaa; font-size: 18px; line-height: 1.7; }
-
-    /* AUTHOR BLOCK */
-    .author-block {
-      max-width: 1200px; margin: 160px auto;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
-    }
-    @media (max-width: 900px) { .author-block { grid-template-columns: 1fr; } }
-    .author-photo-container {
-      position: relative; aspect-ratio: 1/1;
-      background: #1a1a1a; border-radius: 40px;
-      border: 4px solid var(--gold); box-shadow: var(--gold-glow);
-      display: flex; align-items: center; justify-content: center; overflow: hidden;
-    }
-    .author-placeholder { font-size: 96px; color: var(--gold); }
-    .author-info h3 {
-      font-size: 64px; color: white; margin-bottom: 30px; font-weight: 900;
-    }
-    .skills-list {
-      display: grid; grid-template-
-    columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px;
-    }
-    .skill-item {
-      background: #1a1a1a; padding: 22px; border-radius: 16px;
-      border: 1px solid var(--border); text-align: center;
-      color: #ccc; font-size: 18px; font-weight: 700;
-    }
-    .skill-item i { color: var(--gold); margin-right: 10px; }
-
-    /* COLLABS GRID — твои проекты (не команда, а именно твои работы) */
-    .collabs-section {
-      max-width: 1200px; margin: 140px auto; text-align: center;
-    }
-    .collabs-title {
-      font-size: 72px; color: white; margin-bottom: 60px; font-weight: 900;
-      text-shadow: 0 0 40px rgba(255,255,255,0.3);
-    }
+    /* PROJECTS */
     .collabs-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 50px;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 44px;
     }
     .collab-card {
-      background: var(--card-bg); padding: 45px; border-radius: 30px;
+      background: var(--card-bg); padding: 40px; border-radius: 30px;
       border: 1px solid var(--border); position: relative; overflow: hidden;
-      box-shadow: var(--shadow-card); transform: translateY(0); transition: transform 0.4s, box-shadow 0.4s;
+      box-shadow: var(--shadow-card); transform: translateY(0); transition: transform 0.35s, box-shadow 0.35s;
     }
-    .collab-card:hover {
-      transform: translateY(-18px); box-shadow: var(--shadow-hover);
-    }
-    .collab-icon {
-      font-size: 64px; color: var(--gold); margin-bottom: 32px;
-    }
-    .collab-title {
-      font-size: 34px; color: white; margin-bottom: 16px; font-weight: 800;
-    }
-    .collab-desc {
-      color: #aaa; font-size: 19px; line-height: 1.7;
-    }
+    .collab-card:hover { transform: translateY(-14px); box-shadow: var(--shadow-hover); }
+    .collab-icon { font-size: 60px; color: var(--gold); margin-bottom: 30px; }
+    .collab-title { font-size: 34px; color: white; margin-bottom: 14px; font-weight: 800; }
+    .collab-desc { color: #aaa; font-size: 17px; line-height: 1.6; }
 
-    /* REVIEWS GRID — много отзывов, чтобы было ощущение популярности */
-    .reviews-section {
-      max-width: 1200px; margin: 160px auto; text-align: center;
+    /* REVIEWS */
+    .reviews-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 50px;
     }
     .reviews-title {
-      font-size: 72px; color: white; margin-bottom: 70px; font-weight: 900;
-      text-shadow: 0 0 40px rgba(255,255,255,0.3);
+      font-size: 64px; color: white; font-weight: 900;
+      text-align: left; text-shadow: 0 0 30px rgba(255,255,255,0.3);
     }
+    .review-form-btn {
+      background: var(--gold); color: #000; padding: 14px 38px;
+      border-radius: 80px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 2px; cursor: pointer; border: none;
+      box-shadow: var(--gold-glow); transition: transform 0.2s;
+    }
+    .review-form-btn:hover { transform: scale(1.04); }
     .reviews-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 60px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 50px;
     }
     .review-card {
-      background: #131313; padding: 55px; border-radius: 32px;
+      background: #111111; padding: 50px; border-radius: 32px;
       border: 1px solid var(--border); text-align: left; position: relative;
     }
     .review-header { display: flex; align-items: center; gap: 26px; margin-bottom: 26px; }
     .avatar {
-      width: 84px; height: 84px; background: #222; border-radius: 50%;
+      width: 88px; height: 88px; background: #222; border-radius: 50%;
       display: flex; align-items: center; justify-content: center; color: var(--gold);
-      font-weight: 900; font-size: 38px; border: 4px solid var(--gold);
+      font-weight: 900; font-size: 36px; border: 3px solid var(--gold);
     }
     .review-author { color: white; font-weight: 800; }
     .stars { color: var(--gold); margin-left: 12px; }
-    .likes-count {
-      color: #999; font-size: 16px; margin-top: 12px; font-weight: 600;
-    }
-    .likes-count i { color: var(--gold); }
-    .review-text { color: #bbb; font-size: 18px; line-height: 1.6; }
+    .review-text { color: #bbb; font-size: 17px; line-height: 1.6; }
 
-    /* FAQ ACCORDION */
-    .faq-section {
-      max-width: 1200px; margin: 160px auto; text-align: center;
-    }
-    .faq-title {
-      font-size: 72px; color: white; margin-bottom: 70px; font-weight: 900;
-      text-shadow: 0 0 40px rgba(255,255,255,0.3);
-    }
+    /* FAQ */
     .faq-item {
       border: 1px solid var(--border); border-radius: 28px; overflow: hidden;
-      margin-bottom: 26px; background: #141414;
+      margin-bottom: 24px; background: #0e0e0e;
     }
     .faq-header {
-      padding: 36px 52px; cursor: pointer; display: flex;
+      padding: 30px 48px; cursor: pointer; display: flex;
       justify-content: space-between; align-items: center; color: white;
-      font-size: 22px; position: relative;
+      font-size: 20px; position: relative;
     }
-    .faq-header:hover { background: rgba(207,167,85,0.06); }
-    .faq-icon { transition: transform 0.35s; }
+    .faq-header:hover { background: rgba(207,167,85,0.05); }
+    .faq-icon { transition: transform 0.3s; }
     .faq-header.open .faq-icon { transform: rotate(180deg); }
     .faq-content {
-      max-height: 0; opacity: 0; overflow: hidden; padding: 0 52px;
-      transition: max-height 0.45s ease, opacity 0.45s;
+      max-height: 0; opacity: 0; overflow: hidden; padding: 0 48px;
+      transition: max-height 0.4s ease, opacity 0.4s;
     }
     .faq-content.open {
-      max-height: 400px; opacity: 1; padding: 20px 52px 42px;
+
+      max-height: 320px; opacity: 1; padding: 24px 48px;
     }
-    .faq-text { color: #aaa; font-size: 18px; line-height: 1.7; }
+    .faq-text { color: #aaa; font-size: 17px; line-height: 1.6; }
 
     /* CONTACTS */
-    .contacts-section {
-      max-width: 1200px; margin: 160px auto; text-align: center;
-    }
-    .contacts-title {
-      font-size: 72px; color: white; margin-bottom: 70px; font-weight: 900;
-      text-shadow: 0 0 40px rgba(255,255,255,0.3);
-    }
     .contacts-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;
     }
-    @media (max-width: 900px) { .contacts-grid { grid-template-columns: 1fr; } }
-    .contacts-info { text-align: left; color: #aaa; font-size: 19px; line-height: 1.8; }
-    .contact-row { display: flex; align-items: center; margin-bottom: 28px; }
+    .contact-card {
+      background: var(--card-bg); padding: 40px; border-radius: 28px;
+      border: 1px solid var(--border); box-shadow: var(--shadow-card);
+    }
     .contact-icon {
-      width: 64px; height: 64px; background: #1a1a1a; border-radius: 16px;
-      display: flex; align-items: center; justify-content: center; color: var(--gold);
-      margin-right: 24px; font-size: 28px; border: 1px solid var(--border);
+      font-size: 36px; color: var(--gold); margin-bottom: 20px;
     }
-    .social-buttons {
-      display: flex; gap: 36px; justify-content: center; flex-wrap: wrap;
+    .contact-title {
+      font-size: 26px; color: white; margin-bottom: 16px; font-weight: 800;
     }
-    .soc-btn {
-      width: 230px; padding: 22px; background: transparent; border: 1px solid #333;
-      color: white; border-radius: 20px; font-weight: 800; cursor: pointer;
-      transition: all 0.35s; position: relative; overflow: hidden;
-    }
-    .soc-btn:hover { border-color: var(--gold); color: var(--gold); box-shadow: var(--gold-glow); }
+    .contact-info { color: #aaa; line-height: 1.7; }
 
+    /* CART MODAL */
+    .cart-modal {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 3000; background: rgba(0,0,0,0.85); opacity: 0; visibility: hidden;
+      transition: all 0.3s ease; display: flex; align-items: center; justify-content: center;
+    }
+    .cart-modal.active { opacity: 1; visibility: visible; }
+    .cart-window {
+      width: 90%; max-width: 600px; background: #0b0b0b;
+      padding: 40px; border-radius: 32px; border: 1px solid var(--border);
+      box-shadow: 0 50px 120px rgba(0,0,0,0.9); position: relative;
+    }
+    .cart-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 32px;
+    }
+    .cart-title { font-size: 38px; color: white; font-weight: 900; }
+    .close-cart {
+      background: transparent; border: none; color: #888; font-size: 28px;
+      cursor: pointer; line-height: 1;
+    }
+    .close-cart:hover { color: white; }
+    .cart-list { max-height: 400px; overflow-y: auto; margin-bottom: 32px; }
+    .cart-item {
+      display: flex; gap: 20px; padding: 18px 0; border-bottom: 1px solid #1a1a1a;
+    }
+    .cart-item:last-child { border-bottom: none; }
+    .cart-img-placeholder {
+      width: 80px; height: 80px; background: #1a1a1a;
+      border-radius: 12px; display: flex; align-items: center;
+      justify-content: center; color: #555; font-size: 28px;
+    }
+    .cart-info h4 { color: white; font-size: 18px; margin-bottom: 6px; }
+    .cart-price { color: var(--gold); font-weight: 800; font-size: 18px; }
+    .cart-actions button {
+      background: transparent; border: 1px solid #333; color: #aaa;
+      padding: 8px 16px; border-radius: 10px; cursor: pointer;
+      font-size: 14px; transition: all 0.2s;
+    }
+    .cart-actions button:hover { border-color: var(--gold); color: var(--gold); }
+    .cart-total {
+      text-align: right; margin-top: 20px;
+    }
+    .total-label { color: #888; font-size: 16px; }
+    .total-amount { color: var(--gold); font-size: 24px; font-weight: 800; }
+    .checkout-btn {
+      width: 100%; padding: 18px; background: var(--gold);
+      color: #000; font-weight: 800; border: none;
+      border-radius: 20px; font-size: 18px; cursor: pointer;
+      box-shadow: var(--gold-glow); margin-top: 16px;
+    }
+    .checkout-btn:hover { transform: scale(1.02); }
+
+    /* FOOTER */
     footer {
-      background: #040404; padding: 100px 40px; text-align: center;
-      border-top: 1px solid var(--border); color: #666; font-size: 17px;
+      padding: 60px 40px; text-align: center; border-top: 1px solid var(--border);
+      color: #666;
     }
     .footer-logo {
-      font-size: 48px; letter-spacing: 8px; color: white; margin-bottom: 50px;
-      text-shadow: var(--gold-glow);
+      font-size: 42px; letter-spacing: 5px; color: white;
+      text-shadow: var(--gold-glow); margin-bottom: 24px;
     }
-    .footer-links {
-      display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; margin-bottom: 60px;
+    .social-links { display: flex; justify-content: center; gap: 32px; margin-bottom: 32px; }
+    .social-btn {
+      width: 52px; height: 52px; background: #111; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 22px; transition: all 0.3s;
     }
-    .footer-links a { color: #888; transition: 0.3s; }
-    .footer-links a:hover { color: var(--gold); text-shadow: var(--gold-glow); }
-    .copyright { border-top: 1px solid #222; padding-top: 30px; }
+    .social-btn:hover { background: var(--gold); color: #000; transform: translateY(-4px); }
+    .copyright { color: #444; font-size: 15px; }
   </style>
 </head>
 <body>
-
-  <!-- ОБЪЁМНЫЙ ФОН И ЗОЛОТЫЕ ЛИНИИ -->
   <div class="bg-volume"></div>
-  <div class="line-gold line-h" style="top: 12%; left: 0; right: 0;"></div>
-  <div class="line-gold line-v" style="left: 24%; top: 0; bottom: 0;"></div>
-  <div class="line-gold line-v" style="left: 76%; top: 0; bottom: 0;"></div>
+  <div class="line-gold line-h" style="top: 30%; left: 0; right: 0;"></div>
+  <div class="line-gold line-v" style="left: 30%; top: 0; bottom: 0;"></div>
 
   <header>
     <div class="logo">VarVana</div>
     <nav>
       <ul>
-        <li><a href="#catalog">Каталог</a></li>
-        <li><a href="#about">О авторе</a></li>
-        <li><a href="#collabs">Проекты</a></li>
+        <li><a href="#home">Главная</a></li>
+        <li><a href="#catalog">Товары</a></li>
+        <li><a href="#about">Об авторе</a></li>
         <li><a href="#reviews">Отзывы</a></li>
-        <li><a href="#faq">FAQ</a></li>
         <li><a href="#contacts">Контакты</a></li>
       </ul>
     </nav>
+    <div class="cart-btn-wrapper">
+      <button class="cart-btn" onclick="openCart()">
+        <i class="fas fa-shopping-bag"></i> Корзина
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
   </header>
 
   <main>
     <!-- HERO -->
-    <section class="hero">
-      <h1>Luxury Collection<br>от VarVana</h1>
-      <p>Премиальные вещи, созданные с вниманием к деталям. Каждая позиция — про стиль и статус.</p>
-      <span class="badge-elite">Лимитированная серия</span>
+    <section id="home" class="hero">
+      <div class="badge-elite">Luxury Collection</div>
+      <h1>Твой стиль —<br>твой статус</h1>
+      <p>Эксклюзивные вещи и авторские проекты, созданные с вниманием к деталям и любовью к эстетике.</p>
       <div class="cta-buttons">
-        <button class="btn btn-gold" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Смотреть каталог</button>
-        <a href="#contacts" class="btn btn-outline">Связаться</a>
+
+    
+        <button class="btn btn-outline" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Смотреть каталог</button>
+        <button class="btn btn-gold" onclick="document.getElementById('contacts').scrollIntoView({behavior:'smooth'})">Заказать</button>
       </div>
     </section>
-
-    <!-- TIMER BAR -->
-    <div class="timer-bar">
-      <div class="time-item">
-        <span class="time-digit" id="days">00</span>
-        <div class="time-label">Дней</div>
-      </div>
-      <div class="time-item">
-        <span class="time-digit" id="hours">00</span>
-        <div class="time-label">Часов</div>
-      </div>
-      <div class="time-item">
-        <span class="time-digit" id="minutes">00</span>
-        <div class="time-label">Минут</div>
-      </div>
-      <div class="time-item">
-        <span class="time-digit" id="seconds">00</span>
-        <div class="time-label">Секунд</div>
-      </div>
-    </div>
-    <script>
-      const deadline = new Date().getTime() + (7 * 24 * 60 * 60 * 1000); // 7 дней
-      const timerInterval = setInterval(() => {
-        const now = new Date().getTime();
-        const t = deadline - now;
-        const days = Math.floor(t / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((t % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((t % (1000 * 60)) / 1000);
-        if (t > 0) {
-          document.getElementById('days').innerText = String(days).padStart(2, '0');
-          document.getElementById('hours').innerText = String(hours).padStart(2, '0');
-          document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
-          document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
-        } else {
-          clearInterval(timerInterval);
-          document.querySelector('.timer-bar').innerHTML = '<span style="color:var(--gold); font-weight:800;">Лимит распродан</span>';
-        }
-      }, 1000);
-    </script>
 
     <!-- CATALOG -->
     <section id="catalog">
-      <h2 class="section-title">Каталог</h2>
-      <div class="tabs">
-        <button class="tab-btn active" onclick="filterProducts('all')">Все</button>
-        <button class="tab-btn" onclick="filterProducts('hoodies')">Худи</button>
-        <button class="tab-btn" onclick="filterProducts('tees')">Футболки</button>
-        <button class="tab-btn" onclick="filterProducts('accessories')">Аксессуары</button>
-      </div>
+      <h2 class="section-title">Товары</h2>
       <div class="products-grid">
-        <!-- Много товаров, чтобы каталог был реально длинным -->
-        <div class="product-card" data-category="hoodies">
-          <div class="prod-img"><i class="fa-solid fa-circle"></i></div>
-          <h3 class="prod-title">Hoodie «Midnight Gold»</h3>
-          <div class="prod-price">12 990 ₽</div>
-          <button class="buy-btn">В корзину</button>
+        <!-- Товар 1 -->
+        <div class="product-card">
+          <div class="prod-img"><i class="fas fa-shirt"></i></div>
+          <h3 class="prod-title">Футболка «Black Gold»</h3>
+          <div class="prod-price">5 900 ₽</div>
+          <p class="prod-desc">Плотный хлопок, премиальная печать, лимитированный тираж. Идеальный баланс чёрного и золотого.</p>
+          <button class="buy-btn" data-name="Футболка «Black Gold»" data-price="5900">В корзину</button>
         </div>
-        <div class="product-card" data-category="tees">
-          <div class="prod-img"><i class="fa-solid fa-circle"></i></div>
-          <h3 class="prod-title">T-shirt «Velvet Code»</h3>
-          <div class="prod-price">7 490 ₽</div>
-          <button class="buy-btn">В корзину</button>
+        <!-- Товар 2 -->
+        <div class="product-card">
+          <div class="prod-img"><i class="fas fa-hat-cowboy"></i></div>
+          <h3 class="prod-title">Кепка «Urban Shine»</h3>
+          <div class="prod-price">3 700 ₽</div>
+          <p class="prod-desc">Минималистичный силуэт, акцентная строчка, универсальный крой для города и прогулок.</p>
+          <button class="buy-btn" data-name="Кепка «Urban Shine»" data-price="3700">В корзину</button>
         </div>
-        <div class="product-card" data-category="accessories">
-          <div class="prod-img"><i class="fa-solid fa-circle"></i></div>
-          <h3 class="prod-title">Брелок «Gold Edge»</h3>
-          <div class="prod-price">2 190 ₽</div>
-          <button class="buy-btn">В корзину</button>
+        <!-- Товар 3 -->
+        <div class="product-card">
+          <div class="prod-img"><i class="fas fa-ring"></i></div>
+          <h3 class="prod-title">Кольцо «Midnight Gold»</h3>
+          <div class="prod-price">7 200 ₽</div>
+          <p class="prod-desc">Лаконичный дизайн, сочетание матового чёрного и тёплого золота — для тех, кто ценит детали.</p>
+          <button class="buy-btn" data-name="Кольцо «Midnight Gold»" data-price="7200">В корзину</button>
         </div>
-        <div class="product-card" data-category="hoodies">
-          <div class="prod-img"><i class="fa-solid fa-circle"></i></div>
-          <h3 class="prod-title">Hoodie «Black & Gold»</h3>
-          <div class="prod-price">13 990 ₽</div>
-          <button class="buy-btn">В корзину</button>
-        </div>
-        <div class="product-card" data-category="tees">
-          <div class="prod-img"><i class="fa-solid fa-circle"></i></div>
-          <h3 class="prod-title">T-shirt «Elite Signal»</h3>
-          <div class="prod-price">6 990 ₽</div>
-          <button class="buy-btn">В корзину</button>
-        </div>
-        <div class="product-card" data-category="accessories">
-          <        <div class="product-card" data-category="accessories">
-          <div class="prod-img"><i class="fa-solid fa-circle"></i></div>
-          <h3 class="prod-title">Значок «VarVana Logo»</h3>
-          <div class="prod-price">1 490 ₽</div>
-          <button class="buy-btn">В корзину</button>
-        </div>
-        <div class="product-card" data-category="hoodies">
-          <div class="prod-img"><i class="fa-solid fa-circle"></i></div>
-          <h3 class="prod-title">Hoodie «Velvet Night»</h3>
-          <div class="prod-price">12 490 ₽</div>
-          <button class="buy-btn">В корзину</button>
-        </div>
-        <div class="product-card" data-category="tees">
-          <div class="prod-img"><i class="fa-solid fa-circle"></i></div>
-          <h3 class="prod-title">T-shirt «Signal Gold»</h3>
-          <div class="prod-price">7 190 ₽</div>
-          <button class="buy-btn">В корзину</button>
-        </div>
-        <div class="product-card" data-category="accessories">
-          <div class="prod-img"><i class="fa-solid fa-circle"></i></div>
-          <h3 class="prod-title">Стикерпак «Black Gold»</h3>
-          <div class="prod-price">990 ₽</div>
-          <button class="buy-btn">В корзину</button>
-        </div>
-        <div class="product-card" data-category="hoodies">
-          <div class="prod-img"><i class="fa-solid fa-circle"></i></div>
-          <h3 class="prod-title">Hoodie «Elite Edge»</h3>
-          <div class="prod-price">13 490 ₽</div>
-          <button class="buy-btn">В корзину</button>
-        </div>
-        <div class="product-card" data-category="tees">
-          <div class="prod-img"><i class="fa-solid fa-circle"></i></div>
-          <h3 class="prod-title">T-shirt «Midnight Code»</h3>
-          <div class="prod-price">6 890 ₽</div>
-          <button class="buy-btn">В корзину</button>
-        </div>
-        <div class="product-card" data-category="accessories">
-          <div class="prod-img"><i class="fa-solid fa-circle"></i></div>
-          <h3 class="prod-title">Патч «VarVana»</h3>
-          <div class="prod-price">1 290 ₽</div>
-          <button class="buy-btn">В корзину</button>
+        <!-- Товар 4 -->
+        <div class="product-card">
+          <div class="prod-img"><i class="fas fa-bag-shopping"></i></div>
+          <h3 class="prod-title">Сумка «City Core»</h3>
+          <div class="prod-price">9 500 ₽</div>
+          <p class="prod-desc">Компактная, но вместительная, с продуманной фурнитурой и премиальной отделкой.</p>
+          <button class="buy-btn" data-name="Сумка «City Core»" data-price="9500">В корзину</button>
         </div>
       </div>
-
-      <script>
-        function filterProducts(category) {
-          const cards = document.querySelectorAll('.product-card');
-          cards.forEach(card => {
-            if (category === 'all' || card.getAttribute('data-category') === category) {
-              card.style.display = 'block';
-            } else {
-              card.style.display = 'none';
-            }
-          });
-        }
-      </script>
     </section>
 
-    <!-- ABOUT AUTHOR BLOCK — только ты, без «команды», про твои навыки -->
+    <!-- ABOUT / АВТОР -->
     <section id="about">
-      <h2 class="section-title">О авторе</h2>
-      <div class="author-block">
-        <div class="author-photo-container">
-          <i class="author-placeholder">🖼️</i>
-          <!-- Сюда потом поставишь фото или аватарку, которую сама сделаешь -->
+      <h2 class="section-title">Об авторе</h2>
+      <div class="about-grid">
+        <div>
+          <div class="placeholder-box">Место для фото</div>
         </div>
-        <div class="author-info">
-          <h3>VarVana</h3>
-          <p style="color:#aaa; font-size:20px; margin-bottom:30px;">
-            Автор бренда, монтажёр, художник, музыкант. Делаю всё сама — от идеи до релиза.
-          </p>
-          <h4 style="color:var(--gold); font-size:28px; text-transform:uppercase; letter-spacing:4px; margin-bottom:24px;">Мои навыки</h4>
-          <div class="skills-list">
-            <div class="skill-item"><i class="fa-solid fa-music"></i> Треки и вокал</div>
-            <div class="skill-item"><i class="fa-brands fa-tiktok"></i> Короткие туторы и ролики</div>
-            <div class="skill-item"><i class="fa-brands fa-roblox"></i> Контент в Roblox</div>
-            <div class="skill-item"><i class="fa-solid fa-video"></i> Монтаж</div>
-            <div class="skill-item"><i class="fa-solid fa-pencil"></i> Арты (месяц на один, чтобы довести до уровня)</div>
-            <div class="skill-item"><i class="fa-solid fa-code"></i> Сайты (Python, Notepad++)</div>
-            <div class="skill-item"><i class="fa-solid fa-paint-brush"></i> Дизайн мерча</div>
-          </div>
-          <p style="margin-top:36px; color:#aaa; line-height:1.7;">
-            Я не делаю «на скорую руку». Каждый трек, арт, видео, вещь — это история. Хочу, чтобы люди видели: даже если ты одна, можно делать масштабно и стильно.
-          </p>
+        <div class="about-text">
+          <h3>Место для имени</h3>
+          <p>Место для описания: расскажи о себе, своём стиле, вдохновении и подходе к работе — это поможет клиентам лучше тебя почувствовать.</p>
+          <h4>Контакты (1–4)</h4>
+          <div class="contact-placeholder">Место для контакта 1</div>
+          <div class="contact-placeholder">Место для контакта 2</div>
+          <div class="contact-placeholder">Место для контакта 3</div>
+          <div class="contact-placeholder">Место для контакта 4</div>
         </div>
       </div>
     </section>
 
-    <!-- PROJECTS / COLLABS — твои проекты, но как твои личные работы -->
-    <section id="collabs" class="collabs-section">
-      <h2 class="collabs-title">Мои проекты</h2>
-      <div class="collabs-grid">
-        <div class="collab-card">
-          <i class="fa-solid fa-music collab-icon"></i>
-          <h3 class="collab-title">Трек «Темнота»</h3>
-          <p class="collab-desc">
-            Мой первый серьёзный трек, который уже давно в сети. Делала сама: писала текст, подбирала бит, сводила по гайдам. Это про то, как из тишины появляется звук.
-          </p>
-        </div>
-        <div class="collab-card">
-          <i class="fa-brands fa-tiktok collab-icon"></i>
-          <h3 class="collab-title">TikTok без лица</h3>
-          <p class="collab-desc">
-            Туторы и короткие видео, где показываю процесс: как рисую, монтирую, собираю идеи. Хочу доказать, что можно быть в кадре и не показывать лицо — главное, чтобы было интересно.
-          </p>
-        </div>
-        <div class="collab-card">
-          <i class="fa-brands fa-roblox collab-icon"></i>
-          <h3 class="collab-title">Roblox-ролики</h3>
-          <p class="collab-desc">
-            Геймплей и мини-истории в Roblox. Люблю, когда в ролике есть динамика и немного юмора. Делаю сама: снимаю, монтирую, придумываю сценарий.
-          </p>
-        </div>
-        <div class="collab-card">
-          <i class="fa-solid fa-palette collab-icon"></i>
-          <h3 class="collab-title">Арты (месяц на работу)</h3>
-          <p class="collab-desc">
-            Делаю арты целый месяц, чтобы довести их до хорошего уровня. Для меня арт — это не просто картинка, а настроение, которое хочется сохранить.
-          </p>
-        </div>
-        <div class="collab-card">
-          <i class="fa-solid fa-layer-group collab-icon"></i>
-          <h3 class="collab-title">Мерч-дизайн</h3>
-          <p class="collab-desc">
-            Придумываю принты, подбираю ткани, делаю макеты. Хочу, чтобы вещи выглядели дороже, чем стоят, и чтобы в них чувствовался стиль.
-          </p>
-        </div>
-        <div class="collab-card">
-          <i class="fa-solid fa-globe collab-icon"></i>
-          <h3 class="collab-title">Сайт VarVana</h3>
-          <p class="collab-desc">
-            Сайт делаю сама: верстаю, добавляю блоки, настраиваю. Хочу, чтобы он был первым в поиске по запросу «VarVana творческие услуги».
-          </p>
-        </div>
+    <!-- REVIEWS -->
+    <section id="reviews">
+      <div class="reviews-header">
+        <h2 class="reviews-title">Отзывы</h2>
+        <button class="review-form-btn">Оставить отзыв</button>
       </div>
-    </section>
-
-    <!-- REVIEWS — много отзывов, чтобы сайт выглядел популярно -->
-    <section id="reviews" class="reviews-section">
-      <h2 class="reviews-title">Отзывы</h2>
       <div class="reviews-grid">
         <div class="review-card">
           <div class="review-header">
             <div class="avatar">А</div>
             <div>
-              <div class="review-author">Анна К.</div>
-              <div class="stars">
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
+              <div class="review-author">Анна</div>
+              <div class="stars">★★★★★</div>
             </div>
           </div>
-          <p class="review-text">
-            «Взяла худи — сидит идеально, ткань плотная, швы аккуратные. Выглядит дороже, чем стоит. Очень нравится, что бренд делает всё с вниманием к деталям.»
-          </p>
-          <div class="likes-count"><i class="fa-solid fa-heart"></i> 3 820</div>
+          <p class="review-text">«Очень стильный дизайн, вещи выглядят дороже, чем стоят. Отдельное спасибо за быструю обратную связь!»</p>
         </div>
         <div class="review-card">
           <div class="review-header">
             <div class="avatar">М</div>
             <div>
-              <div class="review-author">Максим В.</div>
-              <div class="stars">
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
+              <div class="review-author">Мария</div>
+              <div class="stars">★★★★★</div>
             </div>
           </div>
-          <p class="review-text">
-            «Футболка мягкая, принт не стирается. Понравилось, что упаковка выглядит премиально — сразу чувствуется, что вещь не массовая.»
-          </p>
-          <div class="likes-count"><i class="fa-solid fa-heart"></i> 2 140</div>
+          <p class="review-text">«Привыкла к масс-маркету, но тут совсем другой уровень. Вещь сразу выделяет из толпы — именно это мне и нужно было.»</p>
         </div>
         <div class="review-card">
           <div class="review-header">
             <div class="avatar">К</div>
             <div>
-              <div class="review-author">Катя Т.</div>
-              <div class="stars">
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
+              <div class="review-author">Кирилл</div>
+              <div class="stars">★★★★☆</div>
             </div>
           </div>
-          <p class="review-text">
-            «Заказала сразу 3 позиции: худи, футболку и брелок. Всё пришло в красивой упаковке. Чувствуется, что бренд вкладывается в детали.»
-          </p>
-          <div class="likes-count"><i class="fa-solid fa-heart"></i> 4 012</div>
-        </div>
-        <div class="review-card">
-          <div class="review-header">
-            <div class="avatar">Л</div>
-            <div>
-              <div class="review-author">Лена С.</div>
-              <div class="stars">
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
-            </div>
-          </div>
-          <p class="review-text">
-            «Стикерпак шикарный, клеила на ноутбук — держится отлично. Цвета сочные, бумага плотная. Теперь хочу ещё патч и значок.»
-          </p>
-          <div class="likes-count"><i class="fa-solid fa-heart"></i> 1 980</div>
-        </div>
-        <div class="review-card">
-          <div class="review-header">
-            <div class="avatar">Д</div>
-            <div>
-              <div class="review-author">Дима Р.</div>
-              <div class="stars">
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
-            </div>
-          </div>
-          <p class="review-text">
-            «Худи реально классное: капюшон удобный, рукава не тянутся. Ношу каждый день — выглядит как новая. Спасибо за качество!»
-          </p>
-          <div class="likes-count"><i class="fa-solid fa-heart"></i> 2 750</div>
-        </div>
-        <div class="review-card">
-          <div class="review-header">
-            <div class="avatar">В</div>
-            <div>
-              <div class="review-author">Вика П.</div>
-              <div class="stars">
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
-            </div>
-          </div>
-          <p class="review-text">
-            «Патч крутой, пришила на куртку — смотрится как фирменный элемент. Теперь все спрашивают, где взяла. Хочу ещё один!»
-          </p>
-          <div class="likes-count"><i class="fa-solid fa-heart"></i> 1 630</div>
+          <p class="review-text">«Качество на уровне, доставка быстрая. Единственный нюанс — размер чуть маломерит, но продавец всё оперативно решил.»</p>
         </div>
       </div>
     </section>
 
-    <!-- FAQ ACCORDION -->
-    <section id="faq" class="faq-section">
-      <h2 class="faq-title">FAQ</h2>
+    <!-- FAQ -->
+    <section>
+      <h2 class="section-title">FAQ</h2>
       <div class="faq-item">
-        <div class="faq-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="faq-header" onclick="toggleFaq(this)">
           <span>Как оформить заказ?</span>
-          <i class="fa-solid fa-chevron-down faq-icon"></i>
+          <i class="fas fa-chevron-down faq-icon"></i>
         </div>
         <div class="faq-content">
-          <p class="faq-text">
-            Выберите товар, нажмите «В корзину», затем перейдите к оформлению. Мы принимаем оплату картой и по СБП. После оплаты вы получите подтверждение на почту.
-          </p>
+          <p class="faq-text">Добавьте товар в корзину, укажите контактные данные и способ доставки. Мы свяжемся с вами в течение 24 часов для подтверждения заказа.</p>
         </div>
       </div>
       <div class="faq-item">
-        <div class="faq-header" onclick="this.parentElement.classList.toggle('open')">
-          <span>Есть ли доставка по России?</span>
-          <i class="fa-solid fa-chevron-down faq-icon"></i>
+        <div class="faq-header" onclick="toggleFaq(this)">
+          <span>Есть ли доставка?</span>
+          <i class="fas fa-chevron-down faq-icon"></i>
         </div>
         <div class="faq-content">
-          <p class="faq-text">
-            Да, доставляем по всей России СДЭК и Почтой России. Срок доставки — от 2 до 7 рабочих дней в зависимости от региона.
-          </p>
+          <p class="faq-text">Да, доставляем по всей России. Срок зависит от региона. Доступна курьерская доставка и пункты выдачи.</p>
         </div>
       </div>
       <div class="faq-item">
-        <div class="faq-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="faq-header" onclick="toggleFaq(this)">
           <span>Можно ли вернуть товар?</span>
-          <i class="fa-solid fa-chevron-down faq-icon"></i>
+          <i class="fas fa-chevron-down faq-icon"></i>
         </div>
         <div class="faq-content">
-          <p class="faq-text">
-            Возврат возможен в течение 14 дней при сохранении товарного вида и чека. Мы всегда идём навстречу клиентам.
-          </p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-header" onclick="this.parentElement.classList.toggle('open')">
-          <span>Где производится одежда?</span>
-          <i class="fa-solid fa-chevron-down faq-icon"></i>
-        </div>
-        <div class="faq-content">
-          <p class="faq-text">
-            Вся одежда производится на контрактных фабриках с контролем качества. Используем премиальные ткани и фурнитуру.
-          </p>
-        </div>
-      </div>
-          <div class="faq-item">
-          <div class="faq-header" onclick="this.parentElement.classList.toggle('open')">
-            <span>Как узнать о новых коллекциях?</span>
-            <i class="fa-solid fa-chevron-down faq-icon"></i>
-          </div>
-          <div class="faq-content">
-            <p class="faq-text">
-              Подпишитесь на рассылку на сайте или следите за обновлениями в TikTok (@VarVana). Новые коллекции выходят раз в сезон, лимитированные — ещё реже.
-            </p>
-          </div>
+          <p class="faq-text">Возврат возможен в течение 14 дней при сохранении товарного вида и наличии чека. Подробнее — в разделе «Условия».</p>
         </div>
       </div>
     </section>
 
     <!-- CONTACTS -->
-    <section id="contacts" class="contacts-section">
-      <h2 class="contacts-title">Контакты</h2>
+    <section id="contacts">
+      <h2 class="section-title">Контакты</h2>
       <div class="contacts-grid">
-        <div class="contacts-info">
-          <div class="contact-row">
-            <div class="contact-icon"><i class="fa-brands fa-tiktok"></i></div>
-            <div>TikTok: @VarVana<br><span style="color:#666; font-size:16px;">Короткие туторы, бэкстейдж, обновления мерча</span></div>
-          </div>
-          <div class="contact-row">
-            <div class="contact-icon"><i class="fa-brands fa-youtube"></i></div>
-            <div>YouTube (канал VarVana)<br><span style="color:#666; font-size:16px;">Разборы треков, процесс арта, монтаж</span></div>
-          </div>
-          <div class="contact-row">
-            <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
-            <div>Почта: varvana.contact@mail.ru<br><span style="color:#666; font-size:16px;">По вопросам заказов и коллабораций</span></div>
-          </div>
-          <div class="contact-row">
-            <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
-            <div>Telegram: @VarVana_bot<br><span style="color:#666; font-size:16px;">Оперативные вопросы, статус заказа</span></div>
-          </div>
-          <div class="contact-row">
-            <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
-            <div>Локация: Крым (онлайн-работа)<br><span style="color:#666; font-size:16px;">Доставка по всей России</span></div>
-          </div>
+        <div class="contact-card">
+          <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="contact-title">Адрес</div>
+          <p class="contact-info">Россия, Республика Крым (онлайн-формат работы)</p>
         </div>
-
-        <div class="social-buttons">
-          <button class="soc-btn" onclick="window.open('https://www.tiktok.com/@VarVana')">TikTok</button>
-          <button class="soc-btn" onclick="window.open('#')">YouTube (скоро)</button>
-          <button class="soc-btn" onclick="location.href='mailto:varvana.contact@mail.ru'">Написать на почту</button>
-          <button class="soc-btn" onclick="window.open('https://t.me/VarVana_bot')">Telegram</button>
+        <div class="contact-card">
+          <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+          <div class="contact-title">Email</div>
+          <p class="contact-info">varvana.contact@example.com</p>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon"><i class="fas fa-phone"></i></div>
+          <div class="contact-title">Телефон</div>
+          <p class="contact-info">+7 (999) 000-00-00</p>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon"><i class="fab fa-telegram"></i></div>
+          <div class="contact-title">Telegram</div>
+          <p class="contact-info">@varvana_support</p>
         </div>
       </div>
     </section>
   </main>
 
+  <!-- CART MODAL -->
+  <div class="cart-modal" id="cartModal">
+    <div class="cart-window">
+      <div class="cart-header">
+        <h3 class="cart-title">Корзина</h3>
+                <button class="close-cart" onclick="closeCart()">&times;</button>
+      </div>
+      <div class="cart-list" id="cartList">
+        <!-- Сюда JS добавит товары -->
+        <p style="color:#666; text-align:center; margin-top:40px;">Корзина пуста</p>
+      </div>
+      <div class="cart-total">
+        <div class="total-label">Итого:</div>
+        <div class="total-amount" id="cartTotal">0 ₽</div>
+      </div>
+      <button class="checkout-btn" onclick="alert('Спасибо за заказ! Мы свяжемся с вами для уточнения деталей.')">Оформить заказ</button>
+    </div>
+  </div>
+
   <footer>
     <div class="footer-logo">VarVana</div>
-    <div class="footer-links">
-      <a href="#catalog">Каталог</a>
-      <a href="#about">О авторе</a>
-      <a href="#collabs">Проекты</a>
-      <a href="#reviews">Отзывы</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contacts">Контакты</a>
+    <div class="social-links">
+      <a href="#" class="social-btn"><i class="fab fa-tiktok"></i></a>
+      <a href="#" class="social-btn"><i class="fab fa-telegram"></i></a>
+      <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
+      <a href="#" class="social-btn"><i class="fab fa-vk"></i></a>
     </div>
-    <div class="copyright">
-      © 2026 VarVana. Все права защищены. <br>
-      Сделано автором вручную — без шаблонов, с вниманием к деталям.
-    </div>
+    <p class="copyright">&copy; 2026 VarVana. Все права защищены. Luxury Collection.</p>
   </footer>
+
+  <script>
+    // Корзина
+    let cart = [];
+    const cartCountEl = document.getElementById('cartCount');
+    const cartListEl = document.getElementById('cartList');
+    const cartTotalEl = document.getElementById('cartTotal');
+
+    function updateCartUI() {
+      cartCountEl.textContent = cart.length;
+      cartListEl.innerHTML = '';
+      let total = 0;
+
+      if (cart.length === 0) {
+        cartListEl.innerHTML = '<p style="color:#666; text-align:center; margin-top:40px;">Корзина пуста</p>';
+        cartTotalEl.textContent = '0 ₽';
+        return;
+      }
+
+      cart.forEach((item, index) => {
+        total += item.price;
+        const el = document.createElement('div');
+        el.className = 'cart-item';
+        el.innerHTML = `
+          <div class="cart-img-placeholder"><i class="fas fa-tag"></i></div>
+          <div class="cart-info">
+            <h4>${item.name}</h4>
+            <div class="cart-price">${item.price.toLocaleString()} ₽</div>
+          </div>
+          <div class="cart-actions">
+            <button onclick="removeFromCart(${index})" style="color:var(--gold)">Убрать</button>
+          </div>`;
+        cartListEl.appendChild(el);
+      });
+
+      cartTotalEl.textContent = total.toLocaleString() + ' ₽';
+    }
+
+    document.querySelectorAll('.buy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const name = btn.getAttribute('data-name');
+        const price = parseInt(btn.getAttribute('data-price'));
+        cart.push({ name, price });
+        updateCartUI();
+      });
+    });
+
+    window.removeFromCart = function(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+    };
+
+    // Модальное окно корзины
+    window.openCart = function() {
+      document.getElementById('cartModal').classList.add('active');
+    };
+    window.closeCart = function() {
+      document.getElementById('cartModal').classList.remove('active');
+    };
+
+    // Закрытие по клику вне окна
+    document.getElementById('cartModal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeCart();
+    });
+
+    // FAQ аккордеон
+    window.toggleFaq = function(header) {
+      const item = header.parentElement;
+      const content = item.querySelector('.faq-content');
+      const icon = header.querySelector('.faq-icon');
+
+      const isOpen = item.classList.contains('open');
+      if (isOpen) {
+        item.classList.remove('open');
+        content.classList.remove('open');
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+      } else {
+        // Сначала закрыть все, потом открыть текущий (опционально)
+        document.querySelectorAll('.faq-item').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.faq-content').classList.remove('open');
+          const ic = i.querySelector('.faq-icon');
+          ic.classList.remove('fa-chevron-up');
+          ic.classList.add('fa-chevron-down');
+        });
+        item.classList.add('open');
+        content.classList.add('open');
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+      }
+    };
+  </script>
 </body>
 </html>
+
+
+ 
 
 
