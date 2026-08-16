@@ -329,6 +329,94 @@
     }
     .social-btn:hover { background: var(--gold); color: #000; transform: translateY(-4px); }
     .copyright { color: #444; font-size: 15px; }
+    .review-btn {
+  background: transparent;
+  border: 1px solid #d4af37;
+  color: #d4af37;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+.review-btn:hover {
+  background: #d4af37;
+  color: #121212;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.modal-content {
+  background: #121212;
+  padding: 32px;
+  width: 100%;
+  max-width: 400px;
+  border-left: 5px solid #d4af37;
+}
+.modal-content h3 {
+  color: #f0f0f0;
+  margin-top: 0;
+}
+.stars span {
+  font-size: 28px;
+  color: #333;
+  cursor: pointer;
+}
+.stars span.active {
+  color: #d4af37;
+}
+textarea {
+  width: 100%;
+  padding: 12px;
+  background: #000;
+  border: 1px solid #333;
+  color: #fff;
+  resize: vertical;
+}
+.photo-upload-label {
+  display: inline-block;
+  background: #222;
+  color: #d4af37;
+  padding: 10px 16px;
+  cursor: pointer;
+  margin: 16px 0;
+}
+.submit-btn, .close-btn {
+  padding: 12px 20px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.submit-btn {
+  background: #d4af37;
+  color: #121212;
+  width: 100%;
+}
+.close-btn {
+  background: transparent;
+  color: #aaa;
+  margin-left: 8px;
+}
+.reviews-section { padding: 40px 0; }
+.reviews-list { display: flex; flex-wrap: wrap; gap: 20px; }
+.review-card {
+  background: #1a1a1a;
+  padding: 20px;
+  border-left: 4px solid #d4af37;
+  color: #fff;
+  min-width: 280px;
+  max-width: 320px;
+}
+.review-stars { color: #d4af37; font-size: 18px; margin-bottom: 10px; }
+.review-text { line-height: 1.5; margin: 0 0 12px 0; }
+.review-author { color: #aaa; font-size: 14px; }
+
   </style>
 </head>
 <body>
@@ -607,7 +695,7 @@
     <section id="reviews">
       <div class="reviews-header">
         <h2 class="reviews-title">Отзывы</h2>
-        <button class="review-form-btn">Оставить отзыв</button>
+        <button id="reviewBtn" class="review-btn">Оставить отзыв</button>
       </div>
       <div class="reviews-grid">
         <div class="review-card">
@@ -823,8 +911,135 @@
         icon.classList.remove('fa-chevron-down');
         icon.classList.add('fa-chevron-up');
       }
-    };
-  </script>
+      <!-- Всё для отзывов: окно, звёзды, фото, публикация в список и копия тебе в Телеграм -->
+<div id="reviewModal" class="modal-overlay">
+  <div class="modal-content">
+    <h3>Оставить отзыв о VarVana</h3>
+    <p class="stars">
+      <span class="star" data-value="1">★</span>
+      <span class="star" data-value="2">★</span>
+      <span class="star" data-value="3">★</span>
+      <span class="star" data-value="4">★</span>
+      <span class="star" data-value="5">★</span>
+    </p>
+    <input type="hidden" id="reviewRating" name="rating">
+    <textarea id="reviewText" placeholder="Расскажите, что понравилось или что можно улучшить"></textarea>
+    <label class="photo-upload-label">
+      <input type="file" id="reviewPhoto" accept="image/*" class="photo-input">
+      🖼 Прикрепить фото
+    </label>
+    <button id="submitReview" class="submit-btn">Опубликовать отзыв</button>
+    <button id="closeModal" class="close-btn">Закрыть</button>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById('reviewModal');
+  const btnOpen = document.querySelector('#reviewBtn');
+  const btnClose = document.querySelector('#closeModal');
+  const stars = document.querySelectorAll('.star');
+  const ratingInput = document.getElementById('reviewRating');
+  const submitBtn = document.querySelector('#submitReview');
+  const textArea = document.getElementById('reviewText');
+  const photoInput = document.getElementById('reviewPhoto');
+  const reviewsList = document.querySelector('.reviews-list');
+
+  let selectedRating = 0;
+
+  // Открытие/закрытие
+  if (btnOpen) btnOpen.addEventListener('click', () => modal.style.display = 'flex');
+  if (btnClose) btnClose.addEventListener('click', () => modal.style.display = 'none');
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) modal.style.display = 'none';
+  });
+
+  // Звёзды
+  stars.forEach(star => {
+    star.addEventListener('mouseenter', () => highlightStars(parseInt(star.dataset.value)));
+    star.addEventListener('mouseleave', () => resetStars());
+    star.addEventListener('click', () => {
+      selectedRating = parseInt(star.dataset.value);
+      highlightStars(selectedRating);
+      if (ratingInput) ratingInput.value = selectedRating;
+    });
+  });
+
+  function highlightStars(num) {
+    stars.forEach((s, i) => (i < num ? s.classList.add('active') : s.classList.remove('active')));
+  }
+  function resetStars() {
+    if (!selectedRating) stars.forEach(s => s.classList.remove('active'));
+  }
+
+  // Отправка: добавляем отзыв на сайт и кидаем копию в Телеграм
+  submitBtn.addEventListener('click', async () => {
+    const text = textArea.value.trim();
+    const rating = selectedRating || 0;
+    const photoFile = photoInput.files[0];
+
+    if (!text && rating === 0) {
+      alert('Пожалуйста, напишите отзыв или поставьте оценку');
+      return;
+    }
+
+    // Создаём карточку отзыва
+    const newCard = document.createElement('div');
+    newCard.className = 'review-card';
+
+    let starsHtml = '';
+    for (let i = 1; i <= 5; i++) {
+      starsHtml += i <= rating ? '★' : '☆';
+    }
+
+    let photoHtml = '';
+    if (photoFile) {
+      const reader = new FileReader();
+      await new Promise((resolve, reject) => {
+        reader.onload = resolve;
+        reader.onerror = reject;
+        reader.readAsDataURL(photoFile);
+      });
+      photoHtml = `<img src="${reader.result}" style="width:100%; margin:12px 0; border-radius:6px;">`;
+    }
+
+    newCard.innerHTML = `
+      <div class="review-stars">${starsHtml}</div>
+      ${photoHtml}
+      <p class="review-text">${escapeHtml(text)}</p>
+      <span class="review-author">— Гость</span>
+    `;
+
+    // Вставляем новый отзыв первым в списке
+    if (reviewsList) {
+      reviewsList.insertBefore(newCard, reviewsList.firstChild);
+    } else {
+      console.error('Не найден блок .reviews-list. Добавь на страницу секцию с отзывами.');
+    }
+
+    // Очищаем окошко
+    textArea.value = '';
+    selectedRating = 0;
+    resetStars();
+    modal.style.display = 'none';
+
+    // Копируем сообщение для отправки тебе в Телеграм
+    const message = `Отзыв для VarVana\nОценка: ${rating} ⭐\nТекст: ${text}`;
+    const copyText = document.createElement('textarea');
+    copyText.value = message;
+    document.body.appendChild(copyText);
+    copyText.select();
+    document.execCommand('copy');
+    document.body.removeChild(copyText);
+
+    alert('Отзыв опубликован на сайте!\nСкопировано: отправь этот текст мне в Телеграм: @Angelocheksin');
+  });
+
+  function escapeHtml(str) {
+    return str.replace(/[&<>"']/g, m => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[m]);
+  }
+</script>
 </body>
 </html>
 
