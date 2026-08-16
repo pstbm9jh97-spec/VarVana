@@ -418,7 +418,17 @@ textarea {
   min-width: 280px;
   max-width: 320px;
 }
-.review-stars { color: #d4af37; font-size: 18px; margin-bottom: 10px; }
+.author-photo-circle {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;     /* чтобы фото не растягивалось, а аккуратно обрезалось по кругу */
+  border-radius: 50%;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  display: block;
+  margin: 0 auto;
+}
+
+    .review-stars { color: #d4af37; font-size: 18px; margin-bottom: 10px; }
 .review-text { line-height: 1.5; margin: 0 0 12px 0; }
 .review-author { color: #aaa; font-size: 14px; }
 
@@ -683,7 +693,7 @@ textarea {
     <section id="about">
       <h2 class="section-title">Об авторе</h2>
       <div class="about-grid">
-        <img src="moya-foto.webp">
+        <img src="moya-foto.webp" class="author-photo-circle">
         <div class="about-text">
           <h3>Варвара Олейник</h3>
           <p>Автор/владелец бизнес‑проекта VarVana.
