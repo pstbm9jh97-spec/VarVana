@@ -9,26 +9,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-  <!-- Кнопка корзины в шапке -->
-<div class="cart-header">
-    <button onclick="openCart()">
-        Корзина 
-        <span id="cart-count">0</span>
-    </button>
-</div>
-
-<!-- Сам блок корзины -->
-<div class="cart-modal" style="display:none;">
-    <h3>Корзина</h3>
-    <button onclick="closeCart()">×</button>
-    
-    <div class="cart-items">
-        <!-- Здесь будут товары -->
-    </div>
-    
-    <p>Итого: <span id="total-price">0 ₽</span></p>
-    <button onclick="orderNow()">Оформить заказ</button>
-</div>
 
     <style>
     h1, .card-title, .hero-text {
@@ -499,13 +479,13 @@ textarea {
         <li><a href="#contacts">Контакты</a></li>
       </ul>
     </nav>
-    <div class="cart-btn-wrapper">
-      <button class="cart-btn" onclick="openCart()">
-        <i class="fas fa-shopping-bag"></i> Корзина
-        <span class="cart-count" id="cartCount">0</span>
-      </button>
-    </div>
-  </header>
+<!-- Блок корзины в шапке -->
+<div class="cart-header">
+    <button onclick="openCart()">
+        Корзина 
+        <span id="cart-count">0</span>
+    </button>
+</div>
 
   <main>
     <!-- HERO -->
@@ -1106,6 +1086,18 @@ function orderNow() {
     }
     alert('Открываем форму заказа');
 }
+<!-- Модальное окно корзины -->
+<div class="cart-modal" style="display:none;">
+    <h3>Корзина</h3>
+    <button onclick="closeCart()">×</button>
+    
+    <div class="cart-items">
+        <!-- Товары будут добавляться сюда -->
+    </div>
+    
+    <p>Итого: <span id="total-price">0 ₽</span></p>
+    <button onclick="orderNow()">Оформить заказ</button>
+</div>
 
 </script>
 </body>
