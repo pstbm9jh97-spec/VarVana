@@ -9,6 +9,27 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+  <!-- Кнопка корзины в шапке -->
+<div class="cart-header">
+    <button onclick="openCart()">
+        Корзина 
+        <span id="cart-count">0</span>
+    </button>
+</div>
+
+<!-- Сам блок корзины -->
+<div class="cart-modal" style="display:none;">
+    <h3>Корзина</h3>
+    <button onclick="closeCart()">×</button>
+    
+    <div class="cart-items">
+        <!-- Здесь будут товары -->
+    </div>
+    
+    <p>Итого: <span id="total-price">0 ₽</span></p>
+    <button onclick="orderNow()">Оформить заказ</button>
+</div>
+
     <style>
     h1, .card-title, .hero-text {
   font-family: "Montserrat";
@@ -428,6 +449,33 @@ textarea {
   display: block;
   margin: 0 auto;
 }
+      .cart-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #121212;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.cart-item {
+    margin: 10px 0;
+    padding: 10px;
+    border-bottom: 1px solid #444;
+}
+
+.cart-header button {
+    padding: 10px 20px;
+    background: #fff;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
 
     .review-stars { color: #d4af37; font-size: 18px; margin-bottom: 10px; }
 .review-text { line-height: 1.5; margin: 0 0 12px 0; }
@@ -839,63 +887,10 @@ textarea {
   </footer>
 
   <script>
-    // Корзина
-    let cart = [];
-    const cartCountEl = document.getElementById('cartCount');
-    const cartListEl = document.getElementById('cartList');
-    const cartTotalEl = document.getElementById('cartTotal');
+  
+      
 
-    function updateCartUI() {
-      cartCountEl.textContent = cart.length;
-      cartListEl.innerHTML = '';
-      let total = 0;
-
-      if (cart.length === 0) {
-        cartListEl.innerHTML = '<p style="color:#666; text-align:center; margin-top:40px;">Корзина пуста</p>';
-        cartTotalEl.textContent = '0 ₽';
-        return;
-      }
-
-      cart.forEach((item, index) => {
-        total += item.price;
-        const el = document.createElement('div');
-        el.className = 'cart-item';
-        el.innerHTML = `
-          <div class="cart-img-placeholder"><i class="fas fa-tag"></i></div>
-          <div class="cart-info">
-            <h4>${item.name}</h4>
-            <div class="cart-price">${item.price.toLocaleString()} ₽</div>
-          </div>
-          <div class="cart-actions">
-            <button onclick="removeFromCart(${index})" style="color:var(--gold)">Убрать</button>
-          </div>`;
-        cartListEl.appendChild(el);
-      });
-
-      cartTotalEl.textContent = total.toLocaleString() + ' ₽';
-    }
-
-    document.querySelectorAll('.buy-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const name = btn.getAttribute('data-name');
-        const price = parseInt(btn.getAttribute('data-price'));
-        cart.push({ name, price });
-        updateCartUI();
-      });
-    });
-
-    window.removeFromCart = function(index) {
-      cart.splice(index, 1);
-      updateCartUI();
-    };
-
-    // Модальное окно корзины
-    window.openCart = function() {
-      document.getElementById('cartModal').classList.add('active');
-    };
-    window.closeCart = function() {
-      document.getElementById('cartModal').classList.remove('active');
-    };
+      
 
     // Закрытие по клику вне окна
     document.getElementById('cartModal').addEventListener('click', (e) => {
@@ -1056,6 +1051,62 @@ textarea {
       '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
     })[m]);
   }
+    // Список товаров
+const products = {
+    'hoodie-gold': { name: 'Худи "Fashion Queen"', price: 14600 },
+    'shoes-gold': { name: 'Кроссовки "Golden lady"', price: 9999 },
+    // Добавляем остальные товары по такому же принципу
+};
+
+let cart = [];
+
+function addToCart(productId) {
+    const product = products[productId];
+    cart.push(product);
+    updateCart();
+}
+
+function updateCart() {
+    const cartItems = document.querySelector('.cart-items');
+    let total = 0;
+    
+    cartItems.innerHTML = '';
+    cart.forEach(item => {
+        total += item.price;
+        cartItems.innerHTML += `
+            <div class="cart-item">
+                <p>${item.name}</p>
+                <p>${item.price} ₽</p>
+                <button onclick="removeFromCart('${item.name}')">Удалить</button>
+            </div>
+        `;
+    });
+    
+    document.getElementById('total-price').innerText = total + ' ₽';
+    document.getElementById('cart-count').innerText = cart.length;
+}
+
+function removeFromCart(productName) {
+    cart = cart.filter(item => item.name !== productName);
+    updateCart();
+}
+
+function openCart() {
+    document.querySelector('.cart-modal').style.display = 'block';
+}
+
+function closeCart() {
+    document.querySelector('.cart-modal').style.display = 'none';
+}
+
+function orderNow() {
+    if (cart.length === 0) {
+        alert('Корзина пуста!');
+        return;
+    }
+    alert('Открываем форму заказа');
+}
+
 </script>
 </body>
 </html>
