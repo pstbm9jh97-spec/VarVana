@@ -86,7 +86,7 @@
             }
         }
 
-        /* ===== ЗОЛОТЫЕ ЛИНИИ ===== */
+        /* ===== ЗОЛОТЫЕ ЛИНИИ (фоновые) ===== */
         .line-gold {
             position: fixed;
             z-index: 1;
@@ -100,6 +100,31 @@
         .line-v {
             width: 1px;
             background: rgba(207, 167, 85, 0.5);
+        }
+
+        /* ===== ДЕКОРАТИВНЫЙ РАЗДЕЛИТЕЛЬ (золотая линия с сердечком) ===== */
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 70px 0;
+            width: 100%;
+        }
+        .divider .line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            opacity: 0.4;
+        }
+        .divider .heart {
+            color: var(--gold);
+            font-size: 20px;
+            animation: heart-pulse 2s ease-in-out infinite;
+        }
+        @keyframes heart-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.3); opacity: 1; }
         }
 
         /* ===== ШАПКА ===== */
@@ -126,13 +151,8 @@
             animation: logo-glow 3s ease-in-out infinite;
         }
         @keyframes logo-glow {
-            0%,
-            100% {
-                text-shadow: 0 0 20px rgba(207, 167, 85, 0.4);
-            }
-            50% {
-                text-shadow: 0 0 60px rgba(207, 167, 85, 0.9);
-            }
+            0%, 100% { text-shadow: 0 0 20px rgba(207, 167, 85, 0.4); }
+            50% { text-shadow: 0 0 60px rgba(207, 167, 85, 0.9); }
         }
         nav ul {
             display: flex;
@@ -231,14 +251,8 @@
             animation: hero-fade 1s ease-out;
         }
         @keyframes hero-fade {
-            0% {
-                opacity: 0;
-                transform: scale(0.95) translateY(30px);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
+            0% { opacity: 0; transform: scale(0.95) translateY(30px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
         .hero::before {
             content: '';
@@ -252,12 +266,8 @@
             z-index: 0;
         }
         @keyframes hero-shine {
-            0% {
-                transform: translate(-10%, -10%) scale(1);
-            }
-            100% {
-                transform: translate(10%, 10%) scale(1.1);
-            }
+            0% { transform: translate(-10%, -10%) scale(1); }
+            100% { transform: translate(10%, 10%) scale(1.1); }
         }
         .badge-elite {
             display: inline-block;
@@ -276,13 +286,8 @@
             animation: badge-pulse 3s ease-in-out infinite;
         }
         @keyframes badge-pulse {
-            0%,
-            100% {
-                box-shadow: 0 0 20px rgba(207, 167, 85, 0.5);
-            }
-            50% {
-                box-shadow: 0 0 60px rgba(207, 167, 85, 0.9);
-            }
+            0%, 100% { box-shadow: 0 0 20px rgba(207, 167, 85, 0.5); }
+            50% { box-shadow: 0 0 60px rgba(207, 167, 85, 0.9); }
         }
         .hero h1 {
             font-size: 64px;
@@ -388,46 +393,20 @@
             opacity: 0;
             animation: card-fade-up 0.7s ease forwards;
         }
-        .product-card:nth-child(1) {
-            animation-delay: 0.05s;
-        }
-        .product-card:nth-child(2) {
-            animation-delay: 0.1s;
-        }
-        .product-card:nth-child(3) {
-            animation-delay: 0.15s;
-        }
-        .product-card:nth-child(4) {
-            animation-delay: 0.2s;
-        }
-        .product-card:nth-child(5) {
-            animation-delay: 0.25s;
-        }
-        .product-card:nth-child(6) {
-            animation-delay: 0.3s;
-        }
-        .product-card:nth-child(7) {
-            animation-delay: 0.35s;
-        }
-        .product-card:nth-child(8) {
-            animation-delay: 0.4s;
-        }
-        .product-card:nth-child(9) {
-            animation-delay: 0.45s;
-        }
-        .product-card:nth-child(10) {
-            animation-delay: 0.5s;
-        }
+        .product-card:nth-child(1) { animation-delay: 0.05s; }
+        .product-card:nth-child(2) { animation-delay: 0.1s; }
+        .product-card:nth-child(3) { animation-delay: 0.15s; }
+        .product-card:nth-child(4) { animation-delay: 0.2s; }
+        .product-card:nth-child(5) { animation-delay: 0.25s; }
+        .product-card:nth-child(6) { animation-delay: 0.3s; }
+        .product-card:nth-child(7) { animation-delay: 0.35s; }
+        .product-card:nth-child(8) { animation-delay: 0.4s; }
+        .product-card:nth-child(9) { animation-delay: 0.45s; }
+        .product-card:nth-child(10) { animation-delay: 0.5s; }
 
         @keyframes card-fade-up {
-            0% {
-                opacity: 0;
-                transform: translateY(40px) scale(0.96);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            0% { opacity: 0; transform: translateY(40px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
         .product-card:hover {
             transform: translateY(-12px) scale(1.01);
@@ -577,7 +556,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 50px;
             align-items: center;
-            margin-bottom: 80px;
+            margin-bottom: 60px;
         }
         @media (max-width: 768px) {
             .about-grid {
@@ -667,7 +646,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
-            margin-bottom: 80px;
+            margin-bottom: 60px;
         }
         .review-card {
             background: rgba(17, 17, 17, 0.85);
@@ -680,15 +659,9 @@
             opacity: 0;
             animation: card-fade-up 0.6s ease forwards;
         }
-        .review-card:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-        .review-card:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        .review-card:nth-child(3) {
-            animation-delay: 0.3s;
-        }
+        .review-card:nth-child(1) { animation-delay: 0.1s; }
+        .review-card:nth-child(2) { animation-delay: 0.2s; }
+        .review-card:nth-child(3) { animation-delay: 0.3s; }
         .review-card:hover {
             transform: translateY(-8px);
             border-color: var(--gold);
@@ -800,7 +773,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 30px;
-            margin-bottom: 80px;
+            margin-bottom: 60px;
         }
         .contact-card {
             background: rgba(10, 10, 10, 0.7);
@@ -869,14 +842,8 @@
             animation: modal-pop 0.3s ease;
         }
         @keyframes modal-pop {
-            0% {
-                transform: scale(0.95) translateY(20px);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1) translateY(0);
-                opacity: 1;
-            }
+            0% { transform: scale(0.95) translateY(20px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
         }
         .cart-header-modal {
             display: flex;
@@ -1260,6 +1227,13 @@
             </div>
         </section>
 
+        <!-- === РАЗДЕЛИТЕЛЬ 1 === -->
+        <div class="divider">
+            <span class="line"></span>
+            <span class="heart">❤️</span>
+            <span class="line"></span>
+        </div>
+
         <!-- КАТАЛОГ -->
         <section id="catalog">
             <h2 class="section-title">Лимитированная серия</h2>
@@ -1417,6 +1391,13 @@
             </div>
         </section>
 
+        <!-- === РАЗДЕЛИТЕЛЬ 2 === -->
+        <div class="divider">
+            <span class="line"></span>
+            <span class="heart">❤️</span>
+            <span class="line"></span>
+        </div>
+
         <!-- ОБ АВТОРЕ -->
         <section id="about">
             <h2 class="section-title">Об авторе</h2>
@@ -1433,6 +1414,13 @@
                 </div>
             </div>
         </section>
+
+        <!-- === РАЗДЕЛИТЕЛЬ 3 === -->
+        <div class="divider">
+            <span class="line"></span>
+            <span class="heart">❤️</span>
+            <span class="line"></span>
+        </div>
 
         <!-- ОТЗЫВЫ -->
         <section id="reviews">
@@ -1465,6 +1453,13 @@
             </div>
         </section>
 
+        <!-- === РАЗДЕЛИТЕЛЬ 4 === -->
+        <div class="divider">
+            <span class="line"></span>
+            <span class="heart">❤️</span>
+            <span class="line"></span>
+        </div>
+
         <!-- FAQ -->
         <section>
             <h2 class="section-title">FAQ</h2>
@@ -1490,6 +1485,13 @@
                 <div class="faq-content"><p class="faq-text">Возврат в течение 14 дней при сохранении товарного вида.</p></div>
             </div>
         </section>
+
+        <!-- === РАЗДЕЛИТЕЛЬ 5 === -->
+        <div class="divider">
+            <span class="line"></span>
+            <span class="heart">❤️</span>
+            <span class="line"></span>
+        </div>
 
         <!-- КОНТАКТЫ -->
         <section id="contacts">
@@ -1597,12 +1599,10 @@
 
         // ===== ПРИВЯЗКА ЗВУКА К КЛИКАМ =====
         document.addEventListener('DOMContentLoaded', function() {
-            // Все кнопки и ссылки
             const clickables = document.querySelectorAll('button, .social-btn, nav a, .contact-placeholder');
             clickables.forEach(el => {
                 el.addEventListener('click', soundClick);
             });
-            // Отдельно кнопки "В корзину" — они будут издавать soundAdd через addToCart
         });
 
         // ===== ЧАСТИЦЫ =====
@@ -1644,7 +1644,7 @@
             if (!product) { alert('Товар не найден'); return; }
             cart.push({ id: productId, name: product.name, price: product.price });
             updateCartUI();
-            soundAdd(); // специальный звук добавления
+            soundAdd();
             const btn = document.querySelector('.cart-btn');
             btn.style.borderColor = '#cfa755';
             setTimeout(() => btn.style.borderColor = '#333', 300);
