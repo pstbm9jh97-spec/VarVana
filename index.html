@@ -5,20 +5,20 @@
     <link rel="icon" type="image/png" href="favicon.png?v=2">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VarVana — Luxury Collection</title>
-    <!-- Font Awesome (правильная ссылка) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
-        /* ===== Глобальные стили ===== */
+        /* ===== Глобальные ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         body {
-            background: #030303;
+            background: #000000;
+            /* Чистый чёрный, без градиента */
             color: #ffffff;
             font-family: 'Montserrat', sans-serif;
             line-height: 1.5;
@@ -29,15 +29,16 @@
             color: inherit;
         }
         :root {
-            --bg-dark: #030303;
-            --card-bg: #0a0a0a;
             --gold: #cfa755;
+            --gold-light: #e8c97a;
             --gold-glow: 0 0 40px rgba(207, 167, 85, 0.6);
+            --gold-glow-strong: 0 0 80px rgba(207, 167, 85, 0.8);
             --border: #1f1f1f;
-            --text-main: #ffffff;
-            --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.7);
-            --shadow-hover: 0 35px 70px rgba(0, 0, 0, 0.85);
+            --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.9);
+            --shadow-hover: 0 40px 80px rgba(0, 0, 0, 1);
         }
+
+        /* ===== ФОН (абсолютно чёрный) ===== */
         .bg-volume {
             position: fixed;
             top: 0;
@@ -46,25 +47,75 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
-            background: radial-gradient(circle at 50% 50%, #080808 0%, #000 100%);
+            background: #000000;
         }
+
+        /* ===== ЗОЛОТЫЕ ЧАСТИЦЫ (пыльца) ===== */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(207, 167, 85, 0.8);
+            animation: float-particle linear infinite;
+            opacity: 0.4;
+        }
+        @keyframes float-particle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* ===== ЗОЛОТЫЕ ЛИНИИ ===== */
         .line-gold {
             position: fixed;
             z-index: 1;
             pointer-events: none;
             filter: drop-shadow(0 0 25px rgba(207, 167, 85, 0.9));
-            opacity: 0.4;
+            opacity: 0.3;
+            animation: line-pulse 4s ease-in-out infinite;
+        }
+        @keyframes line-pulse {
+            0%,
+            100% {
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 0.6;
+            }
         }
         .line-h {
             height: 1px;
-            background: rgba(207, 167, 85, 0.5);
+            background: rgba(207, 167, 85, 0.6);
         }
         .line-v {
             width: 1px;
-            background: rgba(207, 167, 85, 0.5);
+            background: rgba(207, 167, 85, 0.6);
         }
 
-        /* ===== ШАПКА (не центрирована) ===== */
+        /* ===== ШАПКА ===== */
         header {
             display: flex;
             justify-content: space-between;
@@ -74,18 +125,28 @@
             position: sticky;
             top: 0;
             z-index: 2000;
-            background: rgba(3, 3, 3, 0.92);
+            background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(16px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.9);
         }
         .logo {
             font-size: 38px;
             font-weight: 900;
-            letter-spacing: 5px;
-            color: white;
+            letter-spacing: 6px;
+            color: #fff;
             text-shadow: var(--gold-glow);
             position: relative;
             flex-shrink: 0;
+            animation: logo-shine 3s ease-in-out infinite;
+        }
+        @keyframes logo-shine {
+            0%,
+            100% {
+                text-shadow: 0 0 30px rgba(207, 167, 85, 0.5);
+            }
+            50% {
+                text-shadow: 0 0 80px rgba(207, 167, 85, 0.9), 0 0 150px rgba(207, 167, 85, 0.3);
+            }
         }
         .logo::after {
             content: '';
@@ -96,126 +157,223 @@
             height: 2px;
             background: var(--gold);
             box-shadow: var(--gold-glow);
+            animation: underline-shine 2s ease-in-out infinite;
         }
+        @keyframes underline-shine {
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(207, 167, 85, 0.3);
+                width: 85%;
+            }
+            50% {
+                box-shadow: 0 0 60px rgba(207, 167, 85, 0.9);
+                width: 100%;
+            }
+        }
+
         nav ul {
             display: flex;
             gap: 36px;
             list-style: none;
         }
         nav a {
-            color: #999;
-            font-weight: 700;
+            color: #aaa;
+            font-weight: 600;
             transition: 0.3s;
             font-size: 15px;
+            letter-spacing: 1px;
+            position: relative;
+            text-transform: uppercase;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--gold);
+            box-shadow: var(--gold-glow);
+            transition: width 0.3s;
+        }
+        nav a:hover::after {
+            width: 100%;
         }
         nav a:hover {
             color: var(--gold);
             text-shadow: var(--gold-glow);
         }
+
         .cart-btn-wrapper {
             position: relative;
             flex-shrink: 0;
         }
         .cart-btn {
             background: transparent;
-            border: 1px solid #2a2a2a;
+            border: 1px solid #333;
             color: #ccc;
-            padding: 10px 20px;
-            border-radius: 14px;
-            font-weight: 800;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 15px;
+            gap: 10px;
+            font-size: 14px;
             font-family: 'Montserrat', sans-serif;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+        .cart-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(207, 167, 85, 0.15) 0%, transparent 70%);
+            animation: btn-ripple 4s infinite;
+            opacity: 0;
+        }
+        @keyframes btn-ripple {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 0;
+            }
         }
         .cart-btn:hover {
             border-color: var(--gold);
-            color: white;
+            color: #fff;
             box-shadow: var(--gold-glow);
+            transform: translateY(-2px);
         }
         .cart-count {
             position: absolute;
             top: -8px;
-            right: -10px;
+            right: -8px;
             background: var(--gold);
             color: #000;
-            font-size: 13px;
+            font-size: 12px;
             width: 22px;
             height: 22px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
+            font-weight: 900;
+            animation: count-pop 0.3s ease;
+        }
+        @keyframes count-pop {
+            0% {
+                transform: scale(0.5);
+            }
+            80% {
+                transform: scale(1.3);
+            }
+            100% {
+                transform: scale(1);
+            }
         }
 
-        /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
-        main {
-            padding: 48px 40px;
-            position: relative;
-            z-index: 2;
-            min-height: 100vh;
-        }
-
-        /* ===== HERO ===== */
+        /* ===== HERO (без лишнего, только роскошь) ===== */
         .hero {
-            max-width: 1100px;
-            margin: 60px auto 80px;
+            max-width: 1200px;
+            margin: 60px auto 100px;
             text-align: center;
-            padding: 100px 50px;
-            background: #0b0b0b;
-            border: 1px solid var(--border);
-            border-radius: 56px;
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+            padding: 120px 60px;
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(207, 167, 85, 0.2);
+            border-radius: 80px;
+            box-shadow: 0 40px 120px rgba(0, 0, 0, 0.9), inset 0 0 100px rgba(207, 167, 85, 0.03);
             position: relative;
             overflow: hidden;
+            animation: hero-appear 1s ease-out;
+        }
+        @keyframes hero-appear {
+            0% {
+                opacity: 0;
+                transform: scale(0.96) translateY(40px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
         .hero::before {
             content: '';
             position: absolute;
-            top: -40%;
-            left: -30%;
-            width: 150%;
-            height: 180%;
-            background: linear-gradient(135deg, rgba(207, 167, 85, 0.08), transparent);
-            transform: rotate(-25deg);
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(207, 167, 85, 0.06) 0%, transparent 70%);
+            animation: hero-shine 8s ease-in-out infinite alternate;
             z-index: 0;
-            opacity: 0.5;
+        }
+        @keyframes hero-shine {
+            0% {
+                transform: translate(-10%, -10%) scale(1);
+            }
+            100% {
+                transform: translate(10%, 10%) scale(1.2);
+            }
         }
         .badge-elite {
             display: inline-block;
-            padding: 16px 44px;
+            padding: 14px 48px;
             background: var(--gold);
             color: #000;
-            font-weight: 800;
+            font-weight: 900;
             text-transform: uppercase;
-            border-radius: 80px;
-            box-shadow: var(--gold-glow);
+            border-radius: 60px;
+            box-shadow: var(--gold-glow-strong);
             margin-bottom: 48px;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             position: relative;
             z-index: 2;
+            animation: badge-pulse 2.5s ease-in-out infinite;
+            font-size: 14px;
+        }
+        @keyframes badge-pulse {
+            0%,
+            100% {
+                box-shadow: 0 0 30px rgba(207, 167, 85, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 80px rgba(207, 167, 85, 0.9), 0 0 150px rgba(207, 167, 85, 0.3);
+            }
         }
         .hero h1 {
-            font-size: 80px;
+            font-size: 92px;
             line-height: 0.95;
-            color: white;
+            color: #fff;
             margin-bottom: 32px;
             font-weight: 900;
             position: relative;
             z-index: 2;
-            text-shadow: 0 0 60px rgba(255, 255, 255, 0.4);
+            text-shadow: 0 0 80px rgba(255, 255, 255, 0.2);
+            letter-spacing: 2px;
         }
         .hero p {
-            color: #aaa;
+            color: #bbb;
             max-width: 720px;
-            margin: 0 auto 48px;
+            margin: 0 auto 56px;
             font-size: 22px;
             position: relative;
             z-index: 2;
+            font-weight: 400;
+            letter-spacing: 0.5px;
         }
         .cta-buttons {
             display: flex;
@@ -226,14 +384,18 @@
             z-index: 2;
         }
         .btn {
-            padding: 16px 36px;
-            border-radius: 18px;
+            padding: 18px 44px;
+            border-radius: 60px;
             font-weight: 800;
             transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
             cursor: pointer;
-            font-size: 17px;
+            font-size: 16px;
             border: none;
             font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
         }
         .btn-gold {
             background: var(--gold);
@@ -241,168 +403,313 @@
             box-shadow: var(--gold-glow);
         }
         .btn-gold:hover {
-            transform: scale(1.04);
+            transform: scale(1.05);
+            box-shadow: var(--gold-glow-strong);
         }
         .btn-outline {
             background: transparent;
-            border: 1px solid #333;
-            color: white;
+            border: 1px solid #555;
+            color: #fff;
         }
         .btn-outline:hover {
             border-color: var(--gold);
             color: var(--gold);
+            box-shadow: var(--gold-glow);
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            transition: width 0.6s, height 0.6s, top 0.6s, left 0.6s;
+        }
+        .btn:active::after {
+            width: 400px;
+            height: 400px;
+            top: -150px;
+            left: -150px;
         }
 
-        /* ===== ЗАГОЛОВКИ СЕКЦИЙ ===== */
+        /* ===== ЗАГОЛОВКИ ===== */
         .section-title {
-            font-size: 54px;
-            color: white;
+            font-size: 58px;
+            color: #fff;
             margin-bottom: 60px;
             font-weight: 900;
             text-align: center;
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            letter-spacing: 3px;
+            text-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 120px;
+            height: 3px;
+            background: var(--gold);
+            margin: 20px auto 0;
+            box-shadow: var(--gold-glow);
         }
 
         /* ===== ТОВАРЫ ===== */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 36px;
-            margin-bottom: 60px;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
         }
         .product-card {
-            background: var(--card-bg);
-            padding: 24px;
-            border-radius: 24px;
-            border: 1px solid var(--border);
+            background: rgba(12, 12, 12, 0.85);
+            backdrop-filter: blur(8px);
+            padding: 28px;
+            border-radius: 32px;
+            border: 1px solid #222;
             box-shadow: var(--shadow-card);
-            transition: transform 0.35s, box-shadow 0.35s;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s, border-color 0.3s;
             display: flex;
             flex-direction: column;
+            opacity: 0;
+            animation: card-fade-up 0.7s ease forwards;
+            position: relative;
+            overflow: hidden;
+        }
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(45deg, transparent 30%, rgba(207, 167, 85, 0.04) 50%, transparent 70%);
+            animation: card-shine 6s infinite;
+            pointer-events: none;
+        }
+        @keyframes card-shine {
+            0% {
+                transform: translateX(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) rotate(45deg);
+            }
+        }
+        .product-card:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+        .product-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+        .product-card:nth-child(3) {
+            animation-delay: 0.15s;
+        }
+        .product-card:nth-child(4) {
+            animation-delay: 0.2s;
+        }
+        .product-card:nth-child(5) {
+            animation-delay: 0.25s;
+        }
+        .product-card:nth-child(6) {
+            animation-delay: 0.3s;
+        }
+        .product-card:nth-child(7) {
+            animation-delay: 0.35s;
+        }
+        .product-card:nth-child(8) {
+            animation-delay: 0.4s;
+        }
+        .product-card:nth-child(9) {
+            animation-delay: 0.45s;
+        }
+        .product-card:nth-child(10) {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes card-fade-up {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.96);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
         .product-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px) scale(1.01);
             box-shadow: var(--shadow-hover);
+            border-color: var(--gold);
         }
+        .product-card:hover::before {
+            animation-duration: 1.5s;
+        }
+
         .prod-img-placeholder {
             width: 100%;
             padding-top: 100%;
-            background: #1a1a1a;
-            border-radius: 16px;
+            background: #141414;
+            border-radius: 20px;
             margin-bottom: 20px;
             position: relative;
             overflow: hidden;
-            border: 1px solid #333;
+            border: 1px solid #2a2a2a;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #666;
+            color: #555;
             font-size: 14px;
+            transition: border-color 0.3s;
         }
+        .product-card:hover .prod-img-placeholder {
+            border-color: var(--gold);
+        }
+
         .prod-title {
             font-size: 20px;
-            color: white;
+            color: #fff;
             margin-bottom: 10px;
             font-weight: 800;
             line-height: 1.3;
         }
         .prod-price {
             color: var(--gold);
-            font-size: 20px;
-            font-weight: 800;
+            font-size: 22px;
+            font-weight: 900;
             margin-bottom: 8px;
         }
         .prod-old-price {
             text-decoration: line-through;
-            color: #777;
-            font-size: 15px;
+            color: #666;
+            font-size: 16px;
             font-weight: 600;
-            margin-right: 10px;
+            margin-right: 12px;
         }
         .prod-desc {
             color: #999;
             font-size: 14px;
             margin-bottom: 16px;
-            line-height: 1.4;
+            line-height: 1.5;
             flex-grow: 1;
         }
         .prod-badge {
-            padding: 8px 12px;
+            padding: 8px 14px;
             background: #000;
             border: 1px solid var(--gold);
             color: var(--gold);
-            font-size: 13px;
-            border-radius: 6px;
+            font-size: 12px;
+            border-radius: 30px;
             text-align: center;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
         .prod-sizes {
             font-size: 13px;
-            color: #888;
-            margin-bottom: 14px;
+            color: #777;
+            margin-bottom: 16px;
         }
         .buy-btn {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             background: transparent;
-            border: 1px solid #222;
-            color: white;
-            border-radius: 12px;
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 40px;
             font-weight: 800;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 15px;
+            font-size: 14px;
             font-family: 'Montserrat', sans-serif;
             margin-top: auto;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            position: relative;
+            overflow: hidden;
         }
         .buy-btn:hover {
             border-color: var(--gold);
             color: var(--gold);
+            box-shadow: var(--gold-glow);
+            transform: translateY(-2px);
+        }
+        .buy-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(207, 167, 85, 0.1);
+            border-radius: 50%;
+            transition: width 0.6s, height 0.6s;
+        }
+        .buy-btn:active::after {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            left: -100px;
         }
 
         /* ===== ОБ АВТОРЕ ===== */
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: start;
-            margin-bottom: 80px;
+            gap: 70px;
+            align-items: center;
+            margin-bottom: 100px;
         }
         @media (max-width: 900px) {
             .about-grid {
                 grid-template-columns: 1fr;
+                text-align: center;
             }
         }
         .author-photo-circle {
-            width: 200px;
-            height: 200px;
+            width: 220px;
+            height: 220px;
             object-fit: cover;
             border-radius: 50%;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
             display: block;
             margin: 0 auto;
-            border: 3px solid var(--gold);
+            border: 4px solid var(--gold);
+            transition: transform 0.5s, box-shadow 0.5s;
+        }
+        .author-photo-circle:hover {
+            transform: scale(1.05) rotate(-3deg);
+            box-shadow: 0 0 80px rgba(207, 167, 85, 0.4);
         }
         .about-text h3 {
-            font-size: 40px;
-            color: white;
+            font-size: 42px;
+            color: #fff;
             margin-bottom: 24px;
-            font-weight: 800;
+            font-weight: 900;
+            letter-spacing: 1px;
         }
         .about-text p {
             color: #aaa;
             margin-bottom: 24px;
             font-size: 18px;
+            line-height: 1.7;
         }
         .contact-placeholder {
-            border: 1px dashed #333;
-            background: #0f0f0f;
-            color: #aaa;
-            padding: 12px 20px;
-            border-radius: 12px;
+            border: 1px solid #2a2a2a;
+            background: #0a0a0a;
+            color: #ccc;
+            padding: 12px 24px;
+            border-radius: 40px;
             margin-top: 12px;
             display: inline-block;
-            margin-right: 10px;
+            margin-right: 12px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        .contact-placeholder:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            box-shadow: var(--gold-glow);
         }
 
         /* ===== ОТЗЫВЫ ===== */
@@ -415,41 +722,61 @@
             gap: 20px;
         }
         .reviews-title {
-            font-size: 54px;
-            color: white;
+            font-size: 56px;
+            color: #fff;
             font-weight: 900;
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
             margin: 0;
         }
         .review-btn {
             background: transparent;
             border: 1px solid var(--gold);
             color: var(--gold);
-            padding: 14px 38px;
-            border-radius: 80px;
+            padding: 14px 42px;
+            border-radius: 60px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 2px;
             cursor: pointer;
-            font-size: 15px;
+            font-size: 14px;
             transition: 0.3s;
             font-family: 'Montserrat', sans-serif;
         }
         .review-btn:hover {
             background: var(--gold);
             color: #000;
+            box-shadow: var(--gold-glow-strong);
+            transform: scale(1.04);
         }
         .reviews-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 40px;
-            margin-bottom: 80px;
+            margin-bottom: 100px;
         }
         .review-card {
-            background: #111111;
-            padding: 30px;
-            border-radius: 32px;
-            border: 1px solid var(--border);
+            background: rgba(17, 17, 17, 0.9);
+            backdrop-filter: blur(6px);
+            padding: 34px;
+            border-radius: 40px;
+            border: 1px solid #222;
+            transition: transform 0.4s, box-shadow 0.4s, border-color 0.3s;
+            opacity: 0;
+            animation: card-fade-up 0.6s ease forwards;
+        }
+        .review-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        .review-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .review-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+        .review-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--gold);
         }
         .review-header {
             display: flex;
@@ -458,8 +785,8 @@
             margin-bottom: 20px;
         }
         .avatar {
-            width: 60px;
-            height: 60px;
+            width: 64px;
+            height: 64px;
             background: #222;
             border-radius: 50%;
             display: flex;
@@ -467,39 +794,51 @@
             justify-content: center;
             color: var(--gold);
             font-weight: 900;
-            font-size: 28px;
+            font-size: 30px;
             border: 2px solid var(--gold);
             flex-shrink: 0;
+            transition: all 0.3s;
+        }
+        .review-card:hover .avatar {
+            transform: scale(1.1) rotate(-5deg);
+            border-color: var(--gold-light);
+            box-shadow: var(--gold-glow);
         }
         .review-author {
-            color: white;
+            color: #fff;
             font-weight: 800;
             font-size: 18px;
         }
         .stars {
             color: var(--gold);
             font-size: 18px;
+            letter-spacing: 2px;
         }
         .review-text {
             color: #bbb;
             font-size: 16px;
-            line-height: 1.6;
+            line-height: 1.7;
         }
         .review-photo {
             width: 100%;
             max-height: 200px;
             object-fit: cover;
-            border-radius: 12px;
+            border-radius: 16px;
             margin: 12px 0;
         }
 
         /* ===== FAQ ===== */
         .faq-item {
-            border: 1px solid var(--border);
-            border-radius: 28px;
+            border: 1px solid #222;
+            border-radius: 40px;
             overflow: hidden;
             margin-bottom: 24px;
-            background: #0e0e0e;
+            background: rgba(14, 14, 14, 0.9);
+            backdrop-filter: blur(4px);
+            transition: border-color 0.3s;
+        }
+        .faq-item:hover {
+            border-color: var(--gold);
         }
         .faq-header {
             padding: 30px 48px;
@@ -507,17 +846,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: white;
+            color: #fff;
             font-size: 20px;
             font-weight: 700;
             transition: background 0.2s;
         }
         .faq-header:hover {
-            background: rgba(207, 167, 85, 0.05);
+            background: rgba(207, 167, 85, 0.04);
         }
         .faq-icon {
-            transition: transform 0.3s;
-            font-size: 22px;
+            transition: transform 0.4s;
+            font-size: 24px;
             color: var(--gold);
         }
         .faq-item.open .faq-icon {
@@ -528,7 +867,7 @@
             opacity: 0;
             overflow: hidden;
             padding: 0 48px;
-            transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s;
+            transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.5s;
         }
         .faq-item.open .faq-content {
             max-height: 300px;
@@ -538,32 +877,43 @@
         .faq-text {
             color: #aaa;
             font-size: 17px;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         /* ===== КОНТАКТЫ ===== */
         .contacts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 40px;
-            margin-bottom: 80px;
+            margin-bottom: 100px;
         }
         .contact-card {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 28px;
-            border: 1px solid var(--border);
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(8px);
+            padding: 34px;
+            border-radius: 32px;
+            border: 1px solid #222;
             box-shadow: var(--shadow-card);
             text-align: center;
+            transition: transform 0.4s, border-color 0.3s, box-shadow 0.4s;
+        }
+        .contact-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: var(--shadow-hover);
         }
         .contact-icon {
-            font-size: 36px;
+            font-size: 40px;
             color: var(--gold);
             margin-bottom: 20px;
+            transition: transform 0.4s;
+        }
+        .contact-card:hover .contact-icon {
+            transform: scale(1.2) rotate(5deg);
         }
         .contact-title {
-            font-size: 22px;
-            color: white;
+            font-size: 24px;
+            color: #fff;
             margin-bottom: 16px;
             font-weight: 800;
         }
@@ -572,7 +922,7 @@
             line-height: 1.7;
         }
 
-        /* ===== МОДАЛЬНОЕ ОКНО КОРЗИНЫ ===== */
+        /* ===== МОДАЛКИ ===== */
         .cart-modal {
             position: fixed;
             top: 0;
@@ -580,7 +930,8 @@
             width: 100%;
             height: 100%;
             z-index: 3000;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(8px);
             display: none;
             align-items: center;
             justify-content: center;
@@ -591,13 +942,25 @@
         .cart-window {
             width: 90%;
             max-width: 600px;
-            background: #0b0b0b;
-            padding: 40px;
-            border-radius: 32px;
-            border: 1px solid var(--border);
-            box-shadow: 0 50px 120px rgba(0, 0, 0, 0.9);
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(12px);
+            padding: 44px;
+            border-radius: 48px;
+            border: 1px solid #222;
+            box-shadow: 0 60px 150px rgba(0, 0, 0, 0.9);
             max-height: 90vh;
             overflow-y: auto;
+            animation: modal-pop 0.4s ease;
+        }
+        @keyframes modal-pop {
+            0% {
+                transform: scale(0.9) translateY(20px);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
         }
         .cart-header-modal {
             display: flex;
@@ -607,25 +970,26 @@
         }
         .cart-title {
             font-size: 34px;
-            color: white;
+            color: #fff;
             font-weight: 900;
+            letter-spacing: 1px;
         }
         .close-cart {
             background: transparent;
             border: none;
             color: #888;
-            font-size: 32px;
+            font-size: 36px;
             cursor: pointer;
-            line-height: 1;
-            transition: 0.2s;
+            transition: 0.3s;
         }
         .close-cart:hover {
-            color: white;
+            color: #fff;
+            transform: rotate(90deg);
         }
         .cart-list {
             max-height: 400px;
             overflow-y: auto;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
         .cart-item {
             display: flex;
@@ -633,31 +997,40 @@
             padding: 16px 0;
             border-bottom: 1px solid #1a1a1a;
             align-items: center;
+            animation: slide-in 0.3s ease;
         }
-        .cart-item:last-child {
-            border-bottom: none;
+        @keyframes slide-in {
+            0% {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
         .cart-item-info h4 {
-            color: white;
+            color: #fff;
             font-size: 17px;
             margin-bottom: 4px;
         }
         .cart-item-price {
             color: var(--gold);
             font-weight: 800;
-            font-size: 16px;
+            font-size: 17px;
         }
         .cart-item-remove {
             background: transparent;
             border: 1px solid #333;
             color: #aaa;
-            padding: 6px 14px;
-            border-radius: 10px;
+            padding: 6px 16px;
+            border-radius: 30px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 12px;
             transition: 0.2s;
             margin-left: auto;
             font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
         }
         .cart-item-remove:hover {
             border-color: var(--gold);
@@ -667,34 +1040,39 @@
             text-align: right;
             margin-top: 20px;
             border-top: 1px solid #222;
-            padding-top: 20px;
+            padding-top: 24px;
         }
         .total-label {
             color: #888;
             font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         .total-amount {
             color: var(--gold);
-            font-size: 28px;
-            font-weight: 800;
+            font-size: 30px;
+            font-weight: 900;
         }
         .checkout-btn {
             width: 100%;
-            padding: 16px;
+            padding: 18px;
             background: var(--gold);
             color: #000;
-            font-weight: 800;
+            font-weight: 900;
             border: none;
-            border-radius: 20px;
+            border-radius: 40px;
             font-size: 18px;
             cursor: pointer;
             box-shadow: var(--gold-glow);
             margin-top: 16px;
             font-family: 'Montserrat', sans-serif;
-            transition: 0.2s;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         .checkout-btn:hover {
             transform: scale(1.02);
+            box-shadow: var(--gold-glow-strong);
         }
         .empty-cart-msg {
             color: #666;
@@ -703,14 +1081,14 @@
             font-size: 18px;
         }
 
-        /* ===== МОДАЛЬНОЕ ОКНО ОТЗЫВА ===== */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(8px);
             display: none;
             justify-content: center;
             align-items: center;
@@ -720,26 +1098,29 @@
             display: flex;
         }
         .modal-content {
-            background: #121212;
-            padding: 36px;
+            background: rgba(16, 16, 16, 0.98);
+            backdrop-filter: blur(12px);
+            padding: 40px;
             width: 100%;
-            max-width: 440px;
-            border-left: 5px solid var(--gold);
-            border-radius: 16px;
+            max-width: 460px;
+            border-left: 6px solid var(--gold);
+            border-radius: 32px;
             max-height: 90vh;
             overflow-y: auto;
+            animation: modal-pop 0.4s ease;
         }
         .modal-content h3 {
-            color: white;
+            color: #fff;
             margin-top: 0;
             font-size: 28px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            font-weight: 900;
         }
         .modal-content .stars {
-            font-size: 32px;
-            margin-bottom: 20px;
+            font-size: 34px;
+            margin-bottom: 24px;
             display: flex;
-            gap: 6px;
+            gap: 8px;
         }
         .modal-content .stars span {
             color: #444;
@@ -748,34 +1129,36 @@
         }
         .modal-content .stars span.active {
             color: var(--gold);
+            transform: scale(1.2);
         }
         textarea {
             width: 100%;
-            padding: 12px;
-            background: #000;
+            padding: 14px;
+            background: #0a0a0a;
             border: 1px solid #333;
             color: #fff;
-            border-radius: 8px;
+            border-radius: 16px;
             resize: vertical;
             font-family: 'Montserrat', sans-serif;
             font-size: 15px;
             margin-bottom: 16px;
-            min-height: 100px;
+            min-height: 110px;
         }
         .photo-upload-label {
             display: inline-block;
-            background: #222;
+            background: #1a1a1a;
             color: var(--gold);
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 24px;
+            border-radius: 40px;
             cursor: pointer;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             font-weight: 600;
-            border: 1px solid #444;
-            transition: 0.2s;
+            border: 1px solid #333;
+            transition: 0.3s;
         }
         .photo-upload-label:hover {
             background: #2a2a2a;
+            border-color: var(--gold);
         }
         .photo-upload-label input {
             display: none;
@@ -783,35 +1166,38 @@
         .submit-btn {
             background: var(--gold);
             color: #000;
-            padding: 14px;
+            padding: 16px;
             border: none;
-            border-radius: 12px;
-            font-weight: 800;
+            border-radius: 40px;
+            font-weight: 900;
             cursor: pointer;
             width: 100%;
             font-size: 16px;
             font-family: 'Montserrat', sans-serif;
-            transition: 0.2s;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         .submit-btn:hover {
             transform: scale(1.02);
+            box-shadow: var(--gold-glow-strong);
         }
         .close-btn {
             background: transparent;
             color: #aaa;
             border: 1px solid #333;
-            padding: 10px 20px;
-            border-radius: 12px;
+            padding: 12px;
+            border-radius: 40px;
             cursor: pointer;
             font-weight: 600;
             font-family: 'Montserrat', sans-serif;
             margin-top: 12px;
             width: 100%;
-            transition: 0.2s;
+            transition: 0.3s;
         }
         .close-btn:hover {
             border-color: var(--gold);
-            color: white;
+            color: #fff;
         }
         .review-stars {
             color: var(--gold);
@@ -829,13 +1215,13 @@
         footer {
             padding: 60px 40px;
             text-align: center;
-            border-top: 1px solid var(--border);
+            border-top: 1px solid #1a1a1a;
             color: #666;
         }
         .footer-logo {
-            font-size: 38px;
-            letter-spacing: 5px;
-            color: white;
+            font-size: 40px;
+            letter-spacing: 6px;
+            color: #fff;
             text-shadow: var(--gold-glow);
             margin-bottom: 24px;
         }
@@ -846,25 +1232,29 @@
             margin-bottom: 32px;
         }
         .social-btn {
-            width: 52px;
-            height: 52px;
+            width: 56px;
+            height: 56px;
             background: #111;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 22px;
-            transition: all 0.3s;
+            color: #fff;
+            font-size: 24px;
+            transition: all 0.4s;
+            border: 1px solid transparent;
         }
         .social-btn:hover {
             background: var(--gold);
             color: #000;
-            transform: translateY(-4px);
+            transform: translateY(-6px) rotate(8deg);
+            box-shadow: var(--gold-glow-strong);
+            border-color: var(--gold);
         }
         .copyright {
             color: #444;
             font-size: 15px;
+            letter-spacing: 1px;
         }
 
         /* ===== АДАПТИВ ===== */
@@ -883,16 +1273,17 @@
                 font-size: 28px;
             }
             .hero h1 {
-                font-size: 44px;
+                font-size: 48px;
             }
             .section-title {
                 font-size: 36px;
             }
             .reviews-title {
-                font-size: 36px;
+                font-size: 34px;
             }
             .about-grid {
                 grid-template-columns: 1fr;
+                text-align: center;
             }
             .faq-header {
                 padding: 20px 24px;
@@ -916,6 +1307,7 @@
             .hero {
                 padding: 60px 20px;
                 margin: 30px 0;
+                border-radius: 40px;
             }
             .products-grid {
                 grid-template-columns: 1fr 1fr;
@@ -938,8 +1330,14 @@
 <body>
     <!-- Фон и линии -->
     <div class="bg-volume"></div>
-    <div class="line-gold line-h" style="top: 30%; left: 0; right: 0;"></div>
-    <div class="line-gold line-v" style="left: 30%; top: 0; bottom: 0;"></div>
+
+    <!-- Частицы -->
+    <div class="particles" id="particles"></div>
+
+    <div class="line-gold line-h" style="top: 20%; left: 0; right: 0;"></div>
+    <div class="line-gold line-v" style="left: 20%; top: 0; bottom: 0;"></div>
+    <div class="line-gold line-h" style="bottom: 20%; left: 0; right: 0;"></div>
+    <div class="line-gold line-v" style="right: 20%; top: 0; bottom: 0;"></div>
 
     <!-- ===== ШАПКА ===== -->
     <header>
@@ -954,150 +1352,128 @@
             </ul>
         </nav>
         <div class="cart-btn-wrapper">
-            <button class="cart-btn" onclick="openCart()">
+            <button class="cart-btn" onclick="openCart()" id="mainCartBtn">
                 <i class="fas fa-shopping-bag"></i> Корзина
                 <span class="cart-count" id="cartCount">0</span>
             </button>
         </div>
     </header>
 
-    <!-- ===== ОСНОВНАЯ ЧАСТЬ ===== -->
+    <!-- ===== ОСНОВНОЙ КОНТЕНТ ===== -->
     <main>
         <!-- HERO -->
         <section id="home" class="hero">
-            <div class="badge-elite">Luxury Collection</div>
+            <div class="badge-elite">✦ Luxury Collection ✦</div>
             <h1>Твой стиль —<br>твой статус</h1>
             <p>Эксклюзивные вещи и авторские проекты, созданные с вниманием к деталям и любовью к эстетике.</p>
             <div class="cta-buttons">
-                <button class="btn btn-outline" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Смотреть каталог</button>
-                <button class="btn btn-gold" onclick="document.getElementById('contacts').scrollIntoView({behavior:'smooth'})">Заказать</button>
+                <button class="btn btn-outline" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Каталог</button>
+                <button class="btn btn-gold" onclick="document.getElementById('contacts').scrollIntoView({behavior:'smooth'})">Связаться</button>
             </div>
         </section>
 
         <!-- КАТАЛОГ -->
         <section id="catalog">
-            <h2 class="section-title">Лимитированная золотая серия</h2>
-            <p style="color:#aaa; text-align:center; max-width:600px; margin: -30px auto 40px; font-size:16px;">Эксклюзивные вещи с золотой отделкой и логотипом VarVana. Ограниченный тираж — успей забрать свой стиль.</p>
-
+            <h2 class="section-title">Лимитированная серия</h2>
+            <p style="color:#aaa; text-align:center; max-width:600px; margin: -30px auto 40px; font-size:16px; letter-spacing:0.5px;">Эксклюзивные вещи с золотой отделкой — тираж ограничен</p>
             <div class="products-grid">
-                <!-- Товар 1: Худи -->
+                <!-- Товар 1 -->
                 <div class="product-card">
-                    <div class="prod-img-placeholder">фото товара</div>
-                    <h3 class="prod-title">Худи "Fashion Queen"<br><span style="color:var(--gold); font-size:14px;">с золотой отделкой</span></h3>
-                    <div>
-                        <span class="prod-old-price">22 400 ₽</span>
-                        <span class="prod-price">14 600 ₽</span>
-                    </div>
-                    <p class="prod-desc">Плотный трикотаж, свободный крой, золотая окантовка и логотип VarVana на груди.</p>
-                    <div class="prod-badge">ℹ️ Лимитированная серия — осталось 3 шт.</div>
+                    <div class="prod-img-placeholder">📸</div>
+                    <h3 class="prod-title">Худи "Fashion Queen"<br><span style="color:var(--gold); font-size:14px;">золотая отделка</span></h3>
+                    <div><span class="prod-old-price">22 400 ₽</span><span class="prod-price">14 600 ₽</span></div>
+                    <p class="prod-desc">Плотный трикотаж, свободный крой, золотая окантовка и логотип VarVana.</p>
+                    <div class="prod-badge">Осталось 3 шт.</div>
                     <div class="prod-sizes"><strong>Размеры:</strong> S, M, L, XL, XXL</div>
                     <button class="buy-btn" onclick="addToCart('hoodie_gold')">В корзину</button>
                 </div>
-
-                <!-- Товар 2: Кроссовки -->
+                <!-- Товар 2 -->
                 <div class="product-card">
-                    <div class="prod-img-placeholder">фото товара</div>
+                    <div class="prod-img-placeholder">📸</div>
                     <h3 class="prod-title">Кроссовки "Golden Lady"<br><span style="color:var(--gold); font-size:14px;">логотип VarVana</span></h3>
-                    <div>
-                        <span class="prod-old-price">16 800 ₽</span>
-                        <span class="prod-price">9 999 ₽</span>
-                    </div>
-                    <p class="prod-desc">Современный силуэт, текстильный верх, золотая акцентная строчка и логотип VarVana сбоку.</p>
-                    <div class="prod-badge">⚡ Специальная цена — лимитированный выпуск</div>
+                    <div><span class="prod-old-price">16 800 ₽</span><span class="prod-price">9 999 ₽</span></div>
+                    <p class="prod-desc">Современный силуэт, текстильный верх, золотая строчка и логотип сбоку.</p>
+                    <div class="prod-badge">Спеццена</div>
                     <div class="prod-sizes"><strong>Размеры:</strong> 36–44</div>
                     <button class="buy-btn" onclick="addToCart('shoes_gold')">В корзину</button>
                 </div>
-
-                <!-- Товар 3: Кепка -->
+                <!-- Товар 3 -->
                 <div class="product-card">
-                    <div class="prod-img-placeholder">фото товара</div>
-                    <h3 class="prod-title">Кепка "Biger Leader"<br><span style="color:var(--gold); font-size:14px;">VarVana, золотая отделка</span></h3>
-                    <div>
-                        <span class="prod-old-price">12 200 ₽</span>
-                        <span class="prod-price">7 700 ₽</span>
-                    </div>
-                    <p class="prod-desc">Классическая форма, плотная ткань, золотая строчка и логотип VarVana спереди.</p>
-                    <div class="prod-badge">ℹ️ Осталось всего 10 шт.</div>
+                    <div class="prod-img-placeholder">📸</div>
+                    <h3 class="prod-title">Кепка "Biger Leader"<br><span style="color:var(--gold); font-size:14px;">золотая отделка</span></h3>
+                    <div><span class="prod-old-price">12 200 ₽</span><span class="prod-price">7 700 ₽</span></div>
+                    <p class="prod-desc">Классическая форма, плотная ткань, золотая строчка и логотип спереди.</p>
+                    <div class="prod-badge">Осталось 10 шт.</div>
                     <button class="buy-btn" onclick="addToCart('cap_gold')">В корзину</button>
                 </div>
-
-                <!-- Товар 4: Духи -->
+                <!-- Товар 4 -->
                 <div class="product-card">
-                    <div class="prod-img-placeholder">фото товара</div>
+                    <div class="prod-img-placeholder">📸</div>
                     <h3 class="prod-title">Духи «Белый шоколад»<br><span style="color:var(--gold); font-size:14px;">30 мл, золотой флакон</span></h3>
-                    <div>
-                        <span class="prod-old-price">2 400 ₽</span>
-                        <span class="prod-price">1 200 ₽</span>
-                    </div>
+                    <div><span class="prod-old-price">2 400 ₽</span><span class="prod-price">1 200 ₽</span></div>
                     <p class="prod-desc">Тёплый сладкий аромат, нежный и уютный. Флакон с золотой окантовкой.</p>
-                    <div class="prod-badge">⚡ Распродажа — цена снижена в 2 раза</div>
+                    <div class="prod-badge">Распродажа</div>
                     <button class="buy-btn" onclick="addToCart('perfume_gold')">В корзину</button>
                 </div>
             </div>
 
-            <h2 class="section-title" style="margin-top:60px;">Основной каталог</h2>
-            <p style="color:#aaa; text-align:center; max-width:600px; margin: -30px auto 40px; font-size:16px;">Качественные вещи с твоими дизайнами VarVana. Печать по заказу, срок 3–5 дней.</p>
-
+            <h2 class="section-title">Основной каталог</h2>
+            <p style="color:#aaa; text-align:center; max-width:600px; margin: -30px auto 40px; font-size:16px;">Печать по заказу, срок 3–5 дней</p>
             <div class="products-grid">
-                <!-- Товар 5: Футболка Black Gold -->
+                <!-- Товар 5 -->
                 <div class="product-card">
-                    <div class="prod-img-placeholder">фото</div>
+                    <div class="prod-img-placeholder">📸</div>
                     <h3 class="prod-title">Футболка «Black Gold»</h3>
                     <span class="prod-price">2 900 ₽</span>
                     <p class="prod-desc">Плотный хлопок, премиальная печать. Чёрный с золотым акцентом.</p>
-                    <div class="prod-badge">⚡ Печать по заказу — срок 3–5 дней</div>
+                    <div class="prod-badge">Печать 3–5 дн.</div>
                     <button class="buy-btn" onclick="addToCart('tshirt_blackgold')">В корзину</button>
                 </div>
-
-                <!-- Товар 6: Футболка Urban Edge -->
+                <!-- Товар 6 -->
                 <div class="product-card">
-                    <div class="prod-img-placeholder">фото</div>
+                    <div class="prod-img-placeholder">📸</div>
                     <h3 class="prod-title">Футболка «Urban Edge»</h3>
                     <span class="prod-price">3 200 ₽</span>
                     <p class="prod-desc">Свободный крой, графический принт. Уличная роскошь.</p>
-                    <div class="prod-badge">⚡ Печать по заказу — срок 3–5 дней</div>
+                    <div class="prod-badge">Печать 3–5 дн.</div>
                     <button class="buy-btn" onclick="addToCart('tshirt_urban')">В корзину</button>
                 </div>
-
-                <!-- Товар 7: Худи Melange Mood -->
+                <!-- Товар 7 -->
                 <div class="product-card">
-                    <div class="prod-img-placeholder">фото</div>
+                    <div class="prod-img-placeholder">📸</div>
                     <h3 class="prod-title">Худи «Melange Mood»</h3>
                     <span class="prod-price">5 000 ₽</span>
-                    <p class="prod-desc">Фактурная ткань, расслабленный крой. Тёмно‑серый меланж.</p>
-                    <div class="prod-badge">⚡ Печать по заказу — срок 3–5 дней</div>
+                    <p class="prod-desc">Фактурная ткань, расслабленный крой. Тёмно-серый меланж.</p>
+                    <div class="prod-badge">Печать 3–5 дн.</div>
                     <div class="prod-sizes"><strong>Размеры:</strong> S, M, L, XL</div>
                     <button class="buy-btn" onclick="addToCart('hoodie_melange')">В корзину</button>
                 </div>
-
-                <!-- Товар 8: Кепка City Core -->
+                <!-- Товар 8 -->
                 <div class="product-card">
-                    <div class="prod-img-placeholder">фото</div>
+                    <div class="prod-img-placeholder">📸</div>
                     <h3 class="prod-title">Кепка «City Core»</h3>
                     <span class="prod-price">2 700 ₽</span>
                     <p class="prod-desc">Классический фасон, плотная ткань, нейтральный цвет.</p>
-                    <div class="prod-badge">⚡ Печать по заказу — срок 3–5 дней</div>
+                    <div class="prod-badge">Печать 3–5 дн.</div>
                     <button class="buy-btn" onclick="addToCart('cap_city')">В корзину</button>
                 </div>
-
-                <!-- Товар 9: Лонгслив Soft Line -->
+                <!-- Товар 9 -->
                 <div class="product-card">
-                    <div class="prod-img-placeholder">фото</div>
+                    <div class="prod-img-placeholder">📸</div>
                     <h3 class="prod-title">Лонгслив «Soft Line»</h3>
                     <span class="prod-price">3 100 ₽</span>
                     <p class="prod-desc">Тонкий трикотаж, аккуратный крой. Для многослойных образов.</p>
-                    <div class="prod-badge">⚡ Печать по заказу — срок 3–5 дней</div>
+                    <div class="prod-badge">Печать 3–5 дн.</div>
                     <div class="prod-sizes"><strong>Размеры:</strong> XS, S, M, L</div>
                     <button class="buy-btn" onclick="addToCart('longsleeve_soft')">В корзину</button>
                 </div>
-
-                <!-- Товар 10: Футболка Midnight Code -->
+                <!-- Товар 10 -->
                 <div class="product-card">
-                    <div class="prod-img-placeholder">фото</div>
+                    <div class="prod-img-placeholder">📸</div>
                     <h3 class="prod-title">Футболка «Midnight Code»</h3>
                     <span class="prod-price">2 700 ₽</span>
                     <p class="prod-desc">Минималистичный дизайн, лаконичный текст. Строго и со вкусом.</p>
-                    <div class="prod-badge">⚡ Печать по заказу — срок 3–5 дней</div>
+                    <div class="prod-badge">Печать 3–5 дн.</div>
                     <button class="buy-btn" onclick="addToCart('tshirt_midnight')">В корзину</button>
                 </div>
             </div>
@@ -1110,11 +1486,12 @@
                 <img src="moya-foto.webp" alt="Варвара Олейник" class="author-photo-circle" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect fill=%22%231a1a1a%22 width=%22200%22 height=%22200%22/%3E%3Ctext x=%2250%22 y=%22115%22 font-family=%22Montserrat%22 font-size=%2230%22 fill=%22%23cfa755%22%3EVarVana%3C/text%3E%3C/svg%3E'">
                 <div class="about-text">
                     <h3>Варвара Олейник</h3>
-                    <p>Автор и владелец бизнес‑проекта VarVana. Девушка, которая самостоятельно создала бренд в 11 лет, сделав сайт, превью, а главное — идею. И по совместительству — добрый, открытый человек.</p>
-                    <h4 style="color:white; margin-top:20px;">Контакты</h4>
-                    <div class="contact-placeholder"><i class="fab fa-telegram"></i> Tg: VarVana</div>
-                    <div class="contact-placeholder"><i class="fab fa-tiktok"></i> TikTok: VarVana</div>
-                    <div class="contact-placeholder"><i class="fas fa-phone"></i> +7 905 329 28-74</div>
+                    <p>Автор и владелица бренда VarVana. Создала проект в 11 лет, вложив душу в каждую деталь. Уверена, что стиль — это способ говорить без слов.</p>
+                    <div>
+                        <span class="contact-placeholder"><i class="fab fa-telegram"></i> @VarVana</span>
+                        <span class="contact-placeholder"><i class="fab fa-tiktok"></i> VarVana</span>
+                        <span class="contact-placeholder"><i class="fas fa-phone"></i> +7 905 329 28-74</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1126,34 +1503,24 @@
                 <button id="reviewBtn" class="review-btn">Оставить отзыв</button>
             </div>
             <div class="reviews-grid" id="reviewsContainer">
-                <!-- Примеры отзывов (будут загружены изначально) -->
                 <div class="review-card">
                     <div class="review-header">
                         <div class="avatar">А</div>
-                        <div>
-                            <div class="review-author">Анна</div>
-                            <div class="stars">★★★★★</div>
-                        </div>
+                        <div><div class="review-author">Анна</div><div class="stars">★★★★★</div></div>
                     </div>
                     <p class="review-text">«Очень стильный дизайн, вещи выглядят дороже, чем стоят. Отдельное спасибо за быструю обратную связь!»</p>
                 </div>
                 <div class="review-card">
                     <div class="review-header">
                         <div class="avatar">М</div>
-                        <div>
-                            <div class="review-author">Мария</div>
-                            <div class="stars">★★★★★</div>
-                        </div>
+                        <div><div class="review-author">Мария</div><div class="stars">★★★★★</div></div>
                     </div>
                     <p class="review-text">«Привыкла к масс-маркету, но тут совсем другой уровень. Вещь сразу выделяет из толпы — именно это мне и нужно было.»</p>
                 </div>
                 <div class="review-card">
                     <div class="review-header">
                         <div class="avatar">К</div>
-                        <div>
-                            <div class="review-author">Кирилл</div>
-                            <div class="stars">★★★★☆</div>
-                        </div>
+                        <div><div class="review-author">Кирилл</div><div class="stars">★★★★☆</div></div>
                     </div>
                     <p class="review-text">«Качество на уровне, доставка быстрая. Единственный нюанс — размер чуть маломерит, но продавец всё оперативно решил.»</p>
                 </div>
@@ -1168,27 +1535,21 @@
                     <span>Как оформить заказ?</span>
                     <i class="fas fa-chevron-down faq-icon"></i>
                 </div>
-                <div class="faq-content">
-                    <p class="faq-text">Добавьте товар в корзину, укажите контактные данные и способ доставки. Мы свяжемся с вами в течение 24 часов для подтверждения заказа.</p>
-                </div>
+                <div class="faq-content"><p class="faq-text">Добавьте товар в корзину, укажите контактные данные и способ доставки. Мы свяжемся с вами в течение 24 часов.</p></div>
             </div>
             <div class="faq-item">
                 <div class="faq-header" onclick="toggleFaq(this)">
                     <span>Есть ли доставка?</span>
                     <i class="fas fa-chevron-down faq-icon"></i>
                 </div>
-                <div class="faq-content">
-                    <p class="faq-text">Да, доставляем по всей России. Срок зависит от региона. Доступна курьерская доставка и пункты выдачи.</p>
-                </div>
+                <div class="faq-content"><p class="faq-text">Доставляем по всей России. Курьером или в пункт выдачи.</p></div>
             </div>
             <div class="faq-item">
                 <div class="faq-header" onclick="toggleFaq(this)">
                     <span>Можно ли вернуть товар?</span>
                     <i class="fas fa-chevron-down faq-icon"></i>
                 </div>
-                <div class="faq-content">
-                    <p class="faq-text">Возврат возможен в течение 14 дней при сохранении товарного вида и наличии чека. Подробнее — в разделе «Условия».</p>
-                </div>
+                <div class="faq-content"><p class="faq-text">Возврат в течение 14 дней при сохранении товарного вида.</p></div>
             </div>
         </section>
 
@@ -1199,7 +1560,7 @@
                 <div class="contact-card">
                     <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
                     <div class="contact-title">Адрес</div>
-                    <p class="contact-info">Россия, Республика Крым (онлайн-формат работы)</p>
+                    <p class="contact-info">Россия, Республика Крым<br>онлайн-формат</p>
                 </div>
                 <div class="contact-card">
                     <div class="contact-icon"><i class="fas fa-envelope"></i></div>
@@ -1227,22 +1588,19 @@
                 <h3 class="cart-title">Корзина</h3>
                 <button class="close-cart" onclick="closeCart()">&times;</button>
             </div>
-            <div class="cart-list" id="cartList">
-                <!-- Сюда JS вставит товары -->
-                <div class="empty-cart-msg">Корзина пуста</div>
-            </div>
+            <div class="cart-list" id="cartList"><div class="empty-cart-msg">Корзина пуста</div></div>
             <div class="cart-total">
-                <div class="total-label">Итого:</div>
+                <div class="total-label">Итого</div>
                 <div class="total-amount" id="cartTotal">0 ₽</div>
             </div>
             <button class="checkout-btn" onclick="checkout()">Оформить заказ</button>
         </div>
     </div>
 
-    <!-- ===== МОДАЛЬНОЕ ОКНО ОТЗЫВА (вынесено из скрипта) ===== -->
+    <!-- ===== МОДАЛЬНОЕ ОКНО ОТЗЫВА ===== -->
     <div class="modal-overlay" id="reviewModal">
         <div class="modal-content">
-            <h3>Оставить отзыв о VarVana</h3>
+            <h3>Оставить отзыв</h3>
             <div class="stars" id="ratingStars">
                 <span data-value="1">★</span>
                 <span data-value="2">★</span>
@@ -1251,12 +1609,12 @@
                 <span data-value="5">★</span>
             </div>
             <input type="hidden" id="reviewRating" value="0">
-            <textarea id="reviewText" placeholder="Расскажите, что понравилось или что можно улучшить"></textarea>
+            <textarea id="reviewText" placeholder="Расскажите, что понравилось..."></textarea>
             <label class="photo-upload-label">
                 <input type="file" id="reviewPhoto" accept="image/*">
                 🖼 Прикрепить фото
             </label>
-            <button id="submitReview" class="submit-btn">Опубликовать отзыв</button>
+            <button id="submitReview" class="submit-btn">Опубликовать</button>
             <button id="closeModalBtn" class="close-btn">Закрыть</button>
         </div>
     </div>
@@ -1270,12 +1628,71 @@
             <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
             <a href="#" class="social-btn"><i class="fab fa-vk"></i></a>
         </div>
-        <p class="copyright">&copy; 2026 VarVana. Все права защищены. Luxury Collection.</p>
+        <p class="copyright">&copy; 2026 VarVana. Все права защищены.</p>
     </footer>
 
     <!-- ===== СКРИПТЫ ===== -->
     <script>
-        // ===== ТОВАРЫ (объект с ценами и названиями) =====
+        // ===== ЗВУКИ (Web Audio API — без внешних файлов) =====
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+
+        function playTone(freq, duration, type = 'sine', volume = 0.15) {
+            try {
+                if (!audioCtx) audioCtx = new AudioCtx();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) { /* тихо падаем, если звук не поддерживается */ }
+        }
+
+        function soundClick() { playTone(1200, 0.12, 'sine', 0.1); }
+
+        function soundAdd() { playTone(880, 0.2, 'sine', 0.12);
+            setTimeout(() => playTone(1320, 0.15, 'sine', 0.08), 150); }
+
+        function soundHover() { playTone(600, 0.08, 'sine', 0.05); }
+
+        // Навешиваем звуки на кнопки и ссылки
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('button, .social-btn, nav a, .contact-placeholder').forEach(el => {
+                el.addEventListener('mouseenter', soundHover);
+                el.addEventListener('click', soundClick);
+            });
+            // Особый звук для кнопок "В корзину"
+            document.querySelectorAll('.buy-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    // звук добавления сработает в addToCart, но добавим ещё один слой
+                });
+            });
+        });
+
+        // ===== ЧАСТИЦЫ =====
+        (function createParticles() {
+            const container = document.getElementById('particles');
+            const count = 50;
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = Math.random() * 5 + 2;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDuration = (Math.random() * 15 + 12) + 's';
+                p.style.animationDelay = (Math.random() * 20) + 's';
+                p.style.opacity = Math.random() * 0.5 + 0.15;
+                container.appendChild(p);
+            }
+        })();
+
+        // ===== ТОВАРЫ =====
         const products = {
             'hoodie_gold': { name: 'Худи "Fashion Queen"', price: 14600 },
             'shoes_gold': { name: 'Кроссовки "Golden Lady"', price: 9999 },
@@ -1289,57 +1706,45 @@
             'tshirt_midnight': { name: 'Футболка «Midnight Code»', price: 2700 }
         };
 
-        // ===== КОРЗИНА =====
         let cart = [];
 
         function addToCart(productId) {
             const product = products[productId];
-            if (!product) {
-                alert('Товар не найден');
-                return;
-            }
-            // Добавляем товар с уникальным id (для удаления по индексу)
+            if (!product) { alert('Товар не найден'); return; }
             cart.push({ id: productId, name: product.name, price: product.price });
             updateCartUI();
-            // Показываем уведомление
-            const count = cart.length;
-            document.getElementById('cartCount').textContent = count;
-            // Анимация кнопки корзины (мигание)
+            soundAdd(); // ✨ звук добавления
             const btn = document.querySelector('.cart-btn');
             btn.style.borderColor = '#cfa755';
-            setTimeout(() => btn.style.borderColor = '#2a2a2a', 300);
+            btn.style.transform = 'scale(1.05)';
+            setTimeout(() => { btn.style.borderColor = '#2a2a2a';
+                btn.style.transform = 'scale(1)'; }, 300);
         }
 
         function removeFromCart(index) {
             cart.splice(index, 1);
             updateCartUI();
+            soundClick();
         }
 
         function updateCartUI() {
             const cartList = document.getElementById('cartList');
             const cartTotal = document.getElementById('cartTotal');
             const cartCount = document.getElementById('cartCount');
-
             if (cart.length === 0) {
                 cartList.innerHTML = '<div class="empty-cart-msg">Корзина пуста</div>';
                 cartTotal.textContent = '0 ₽';
                 cartCount.textContent = '0';
                 return;
             }
-
-            let html = '';
-            let total = 0;
+            let html = '',
+                total = 0;
             cart.forEach((item, index) => {
                 total += item.price;
-                html += `
-                    <div class="cart-item">
-                        <div class="cart-item-info">
-                            <h4>${item.name}</h4>
-                            <div class="cart-item-price">${item.price.toLocaleString()} ₽</div>
-                        </div>
-                        <button class="cart-item-remove" onclick="removeFromCart(${index})">Удалить</button>
-                    </div>
-                `;
+                html += `<div class="cart-item">
+                    <div class="cart-item-info"><h4>${item.name}</h4><div class="cart-item-price">${item.price.toLocaleString()} ₽</div></div>
+                    <button class="cart-item-remove" onclick="removeFromCart(${index})">Удалить</button>
+                </div>`;
             });
             cartList.innerHTML = html;
             cartTotal.textContent = total.toLocaleString() + ' ₽';
@@ -1348,48 +1753,36 @@
 
         function openCart() {
             document.getElementById('cartModal').classList.add('active');
-            updateCartUI(); // обновляем на случай, если что-то изменилось
+            updateCartUI();
+            soundClick();
         }
 
         function closeCart() {
             document.getElementById('cartModal').classList.remove('active');
+            soundClick();
         }
-
-        // Закрытие по клику на фон
         document.getElementById('cartModal').addEventListener('click', function(e) {
             if (e.target === this) closeCart();
         });
 
         function checkout() {
-            if (cart.length === 0) {
-                alert('Корзина пуста! Добавьте товары.');
-                return;
-            }
-            alert('Спасибо за заказ! Мы свяжемся с вами для уточнения деталей.');
-            // Здесь можно добавить очистку корзины или редирект на форму
+            if (cart.length === 0) { alert('Корзина пуста!'); return; }
+            soundClick();
+            alert('Спасибо за заказ! Мы свяжемся с вами.');
             cart = [];
             updateCartUI();
             closeCart();
         }
 
-        // ===== FAQ АККОРДЕОН =====
+        // ===== FAQ =====
         function toggleFaq(header) {
             const item = header.closest('.faq-item');
-            const content = item.querySelector('.faq-content');
-            const icon = header.querySelector('.faq-icon');
-
-            // Закрываем все остальные
-            document.querySelectorAll('.faq-item').forEach(el => {
-                if (el !== item) {
-                    el.classList.remove('open');
-                }
-            });
-
+            document.querySelectorAll('.faq-item').forEach(el => { if (el !== item) el.classList.remove('open'); });
             item.classList.toggle('open');
-            // иконка переворачивается через CSS
+            soundClick();
         }
 
-        // ===== ОТЗЫВЫ: модальное окно, звёзды, отправка =====
+        // ===== ОТЗЫВЫ =====
         document.addEventListener('DOMContentLoaded', function() {
             const reviewModal = document.getElementById('reviewModal');
             const openReviewBtn = document.getElementById('reviewBtn');
@@ -1400,102 +1793,70 @@
             const photoInput = document.getElementById('reviewPhoto');
             const submitBtn = document.getElementById('submitReview');
             const reviewsContainer = document.getElementById('reviewsContainer');
-
             let selectedRating = 0;
 
-            // Открыть / закрыть модалку
-            openReviewBtn.addEventListener('click', () => reviewModal.classList.add('active'));
-            closeReviewBtn.addEventListener('click', () => reviewModal.classList.remove('active'));
-            reviewModal.addEventListener('click', (e) => {
-                if (e.target === reviewModal) reviewModal.classList.remove('active');
-            });
+            openReviewBtn.addEventListener('click', () => { reviewModal.classList.add('active');
+                soundClick(); });
+            closeReviewBtn.addEventListener('click', () => { reviewModal.classList.remove('active');
+                soundClick(); });
+            reviewModal.addEventListener('click', (e) => { if (e.target === reviewModal) reviewModal.classList.remove(
+                    'active'); });
 
-            // Звёзды
             stars.forEach(star => {
-                star.addEventListener('mouseenter', function() {
-                    const val = parseInt(this.dataset.value);
-                    highlightStars(val);
-                });
-                star.addEventListener('mouseleave', function() {
-                    highlightStars(selectedRating);
-                });
+                star.addEventListener('mouseenter', function() { highlightStars(parseInt(this.dataset
+                    .value)); });
+                star.addEventListener('mouseleave', function() { highlightStars(selectedRating); });
                 star.addEventListener('click', function() {
                     selectedRating = parseInt(this.dataset.value);
                     ratingInput.value = selectedRating;
                     highlightStars(selectedRating);
+                    soundClick();
                 });
             });
 
             function highlightStars(num) {
-                stars.forEach((s, i) => {
-                    if (i < num) s.classList.add('active');
-                    else s.classList.remove('active');
-                });
+                stars.forEach((s, i) => { if (i < num) s.classList.add('active');
+                    else s.classList.remove('active'); });
             }
 
-            // Отправка отзыва
             submitBtn.addEventListener('click', function() {
                 const text = reviewText.value.trim();
                 const rating = selectedRating;
-
-                if (!text && rating === 0) {
-                    alert('Пожалуйста, напишите отзыв или поставьте оценку');
-                    return;
-                }
-
-                // Создаем карточку
+                if (!text && rating === 0) { alert('Напишите отзыв или поставьте оценку'); return; }
                 const card = document.createElement('div');
                 card.className = 'review-card';
-
-                // Звёзды
                 let starsHtml = '';
-                for (let i = 1; i <= 5; i++) {
-                    starsHtml += (i <= rating) ? '★' : '☆';
-                }
-
-                // Фото
+                for (let i = 1; i <= 5; i++) starsHtml += (i <= rating) ? '★' : '☆';
                 let photoHtml = '';
                 if (photoInput.files && photoInput.files[0]) {
                     const reader = new FileReader();
                     reader.onload = function(e) {
-                        photoHtml = `<img src="${e.target.result}" class="review-photo" alt="Фото отзыва">`;
-                        card.innerHTML = `
-                            <div class="review-stars">${starsHtml}</div>
-                            ${photoHtml}
-                            <p class="review-text">${escapeHtml(text)}</p>
-                            <span class="review-author-name">— Гость</span>
-                        `;
-                        // Вставляем в начало
+                        photoHtml = `<img src="${e.target.result}" class="review-photo" alt="Фото">`;
+                        card.innerHTML =
+                            `<div class="review-stars">${starsHtml}</div>${photoHtml}<p class="review-text">${escapeHtml(text)}</p><span class="review-author-name">— Гость</span>`;
                         reviewsContainer.insertBefore(card, reviewsContainer.firstChild);
                     };
                     reader.readAsDataURL(photoInput.files[0]);
                 } else {
-                    card.innerHTML = `
-                        <div class="review-stars">${starsHtml}</div>
-                        <p class="review-text">${escapeHtml(text)}</p>
-                        <span class="review-author-name">— Гость</span>
-                    `;
+                    card.innerHTML =
+                        `<div class="review-stars">${starsHtml}</div><p class="review-text">${escapeHtml(text)}</p><span class="review-author-name">— Гость</span>`;
                     reviewsContainer.insertBefore(card, reviewsContainer.firstChild);
                 }
-
-                // Очищаем форму
                 reviewText.value = '';
                 selectedRating = 0;
                 ratingInput.value = '0';
                 highlightStars(0);
                 photoInput.value = '';
                 reviewModal.classList.remove('active');
-
-                // Копируем текст в буфер для отправки в Telegram (вспомогательно)
+                soundClick();
                 const message = `Отзыв для VarVana\nОценка: ${rating} ⭐\nТекст: ${text}`;
                 navigator.clipboard.writeText(message).then(() => {
-                    alert('Отзыв опубликован на сайте!\nСкопировано в буфер обмена. Отправьте мне в Telegram: @Angelocheksin');
+                    alert('Отзыв опубликован! Скопировано в буфер.');
                 }).catch(() => {
-                    alert('Отзыв опубликован!\nСкопируйте текст и отправьте в Telegram: @Angelocheksin');
+                    alert('Отзыв опубликован! Скопируйте текст в Telegram.');
                 });
             });
 
-            // Вспомогательная функция экранирования
             function escapeHtml(str) {
                 const div = document.createElement('div');
                 div.textContent = str;
@@ -1503,10 +1864,7 @@
             }
         });
 
-        // Инициализация корзины при загрузке
-        document.addEventListener('DOMContentLoaded', function() {
-            updateCartUI();
-        });
+        document.addEventListener('DOMContentLoaded', function() { updateCartUI(); });
     </script>
 </body>
 </html>
