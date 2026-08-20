@@ -1178,7 +1178,23 @@
             .contacts-grid {
                 grid-template-columns: 1fr;
             }
-        }
+/* Явно поднимаем все секции выше декоративных линий */
+main section {
+    position: relative;
+    z-index: 2;
+}
+
+/* Особенно для "Об авторе" — чтобы точно быть поверх */
+#about {
+    z-index: 3;
+    background: #000; /* перекрываем возможные просветы */
+}
+
+/* Если надо — и для других секций тоже */
+#reviews, #catalog, #contacts, #home {
+    z-index: 2;
+}
+        
     </style>
 </head>
 <body>
