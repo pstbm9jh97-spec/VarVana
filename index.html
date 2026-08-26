@@ -30,6 +30,7 @@
         }
         :root {
             --gold: #cfa755;
+            --gold-light: #e8c97a;
             --gold-glow: 0 0 30px rgba(207, 167, 85, 0.5);
             --gold-glow-strong: 0 0 60px rgba(207, 167, 85, 0.8);
             --border: #1f1f1f;
@@ -48,7 +49,7 @@
             background: #000;
         }
 
-        /* ===== ЧАСТИЦЫ (лёгкие) ===== */
+        /* ===== ЧАСТИЦЫ ===== */
         .particles {
             position: fixed;
             top: 0;
@@ -70,28 +71,18 @@
             opacity: 0.3;
         }
         @keyframes float-particle {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            20% {
-                opacity: 0.6;
-            }
-            80% {
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateY(-10vh) rotate(720deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.6; }
+            80% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
         }
 
-        /* ===== ЗОЛОТЫЕ ЛИНИИ (фоновые) ===== */
+        /* ===== ЗОЛОТЫЕ ЛИНИИ ===== */
         .line-gold {
             position: fixed;
             z-index: 1;
             pointer-events: none;
-            opacity: 0.15;
+            opacity: 0.12;
         }
         .line-h {
             height: 1px;
@@ -102,7 +93,7 @@
             background: rgba(207, 167, 85, 0.5);
         }
 
-        /* ===== ДЕКОРАТИВНЫЙ РАЗДЕЛИТЕЛЬ (золотая линия с сердечком) ===== */
+        /* ===== РАЗДЕЛИТЕЛИ С СЕРДЕЧКОМ ===== */
         .divider {
             display: flex;
             align-items: center;
@@ -242,7 +233,6 @@
             padding: 80px 30px;
             background: rgba(10, 10, 10, 0.5);
             backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
             border: 1px solid rgba(207, 167, 85, 0.15);
             border-radius: 60px;
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
@@ -372,6 +362,152 @@
             box-shadow: 0 0 30px rgba(207, 167, 85, 0.6);
         }
 
+        /* ===== БЛОК ЛИМИТИРОВАННЫЙ НАБОР (над каталогом) ===== */
+        .limited-block {
+            max-width: 1100px;
+            margin: 40px auto 60px;
+            padding: 60px 40px;
+            background: radial-gradient(circle at 20% 50%, rgba(207,167,85,0.08), transparent 70%),
+                        rgba(8,8,8,0.9);
+            border: 1px solid rgba(207,167,85,0.3);
+            border-radius: 60px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 0 80px rgba(207,167,85,0.08);
+        }
+        .limited-block::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(207,167,85,0.06), transparent, rgba(207,167,85,0.06), transparent);
+            animation: limited-rotate 12s linear infinite;
+            z-index: 0;
+        }
+        @keyframes limited-rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .limited-content {
+            position: relative;
+            z-index: 2;
+        }
+        .limited-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(207,167,85,0.15), transparent 70%);
+            filter: blur(60px);
+            animation: glow-pulse 3s ease-in-out infinite;
+            z-index: 0;
+        }
+        @keyframes glow-pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+        }
+        .limited-title {
+            font-size: 52px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #cfa755, #f5e6a3, #cfa755, #f5e6a3);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine-title 4s linear infinite;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 16px;
+        }
+        @keyframes shine-title {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+        .limited-subtitle {
+            font-size: 18px;
+            color: #ccc;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+        .limited-desc {
+            font-size: 16px;
+            color: #999;
+            max-width: 500px;
+            margin: 0 auto 30px;
+            position: relative;
+            z-index: 2;
+            line-height: 1.6;
+        }
+        .limited-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+        .btn-limited {
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+        }
+        .btn-limited:hover {
+            background: var(--gold);
+            color: #000;
+            box-shadow: 0 0 40px rgba(207,167,85,0.4);
+            transform: scale(1.04);
+        }
+        .btn-limited-gold {
+            background: var(--gold);
+            color: #000;
+            border: none;
+            box-shadow: 0 0 30px rgba(207,167,85,0.4);
+        }
+        .btn-limited-gold:hover {
+            background: #f5e6a3;
+            box-shadow: 0 0 60px rgba(207,167,85,0.7);
+            transform: scale(1.05);
+        }
+        .limited-timer {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 6px;
+            margin-top: 24px;
+            position: relative;
+            z-index: 2;
+            font-variant-numeric: tabular-nums;
+        }
+        .limited-timer span {
+            display: inline-block;
+            min-width: 40px;
+            padding: 6px 12px;
+            background: rgba(207,167,85,0.08);
+            border-radius: 10px;
+            margin: 0 4px;
+            border: 1px solid rgba(207,167,85,0.15);
+        }
+
         /* ===== ТОВАРЫ ===== */
         .products-grid {
             display: grid;
@@ -382,12 +518,11 @@
         .product-card {
             background: var(--card-bg);
             backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
             padding: 20px;
             border-radius: 28px;
             border: 1px solid #222;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s, border-color 0.3s;
+            transition: transform 0.4s, box-shadow 0.4s, border-color 0.3s;
             display: flex;
             flex-direction: column;
             opacity: 0;
@@ -425,7 +560,6 @@
             border-color: var(--gold);
         }
 
-        /* ===== КРАСИВЫЙ ПЛЕЙСХОЛДЕР ДЛЯ ФОТО ===== */
         .prod-img-placeholder {
             width: 100%;
             padding-top: 100%;
@@ -440,10 +574,8 @@
             color: var(--gold);
             font-size: 13px;
             transition: border-color 0.3s, transform 0.3s;
-            position: relative;
-            overflow: hidden;
-            text-align: center;
             padding: 10px;
+            text-align: center;
         }
         .product-card:hover .prod-img-placeholder {
             border-color: var(--gold);
@@ -662,7 +794,6 @@
         .review-card {
             background: rgba(17, 17, 17, 0.85);
             backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
             padding: 28px;
             border-radius: 32px;
             border: 1px solid #222;
@@ -789,7 +920,6 @@
         .contact-card {
             background: rgba(10, 10, 10, 0.7);
             backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
             padding: 28px;
             border-radius: 28px;
             border: 1px solid #222;
@@ -832,7 +962,6 @@
             z-index: 3000;
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
             display: none;
             align-items: center;
             justify-content: center;
@@ -969,7 +1098,6 @@
             bottom: 0;
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
             display: none;
             justify-content: center;
             align-items: center;
@@ -1178,6 +1306,20 @@
             .cart-window {
                 padding: 24px;
             }
+            .limited-block {
+                padding: 40px 20px;
+                border-radius: 40px;
+            }
+            .limited-title {
+                font-size: 32px;
+            }
+            .limited-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .limited-timer {
+                font-size: 22px;
+            }
         }
         @media (max-width: 480px) {
             .products-grid {
@@ -1189,21 +1331,31 @@
             .contacts-grid {
                 grid-template-columns: 1fr;
             }
+            .limited-title {
+                font-size: 26px;
+            }
+            .limited-timer {
+                font-size: 18px;
+            }
+            .limited-timer span {
+                min-width: 30px;
+                padding: 4px 8px;
+            }
         }
         /* Явно поднимаем все секции выше декоративных линий */
         main section {
             position: relative;
             z-index: 2;
         }
-
-        /* Особенно для "Об авторе" — чтобы точно быть поверх */
         #about {
             z-index: 3;
             background: #000;
         }
-
-        /* Для остальных секций */
         #reviews, #catalog, #contacts, #home {
+            z-index: 2;
+        }
+        .limited-block {
+            position: relative;
             z-index: 2;
         }
     </style>
@@ -1261,238 +1413,53 @@
             <span class="line"></span>
         </div>
 
-        <!-- КАТАЛОГ (обновлённый) -->
+        <!-- === НОВЫЙ БЛОК ЛИМИТИРОВАННЫЙ НАБОР (над каталогом) === -->
+        <div class="limited-block" id="limited">
+            <div class="limited-glow"></div>
+            <div class="limited-content">
+                <div class="limited-subtitle">✦ Эксклюзив ✦</div>
+                <h2 class="limited-title">Лимитированный набор VarVana</h2>
+                <p class="limited-desc">
+                    Ограниченная коллекция для тех, кто хочет получить максимум стиля.<br>
+                    Только 50 наборов. Без повторного выпуска.
+                </p>
+                <div class="limited-buttons">
+                    <button class="btn-limited btn-limited-gold" onclick="alert('Скоро вы сможете оставить заявку!')">
+                        <i class="fas fa-gem" style="margin-right:8px;"></i> Хочу первым
+                    </button>
+                    <button class="btn-limited" onclick="alert('Подробности появятся ближе к релизу!')">
+                        <i class="fas fa-info-circle" style="margin-right:8px;"></i> Подробнее
+                    </button>
+                    <button class="btn-limited" onclick="alert('Мы напомним вам о старте продаж!')">
+                        <i class="fas fa-bell" style="margin-right:8px;"></i> Напомнить
+                    </button>
+                </div>
+                <div class="limited-timer" id="limitedTimer">
+                    <span id="days">00</span> :
+                    <span id="hours">00</span> :
+                    <span id="minutes">00</span> :
+                    <span id="seconds">00</span>
+                </div>
+                <p style="color:#777; font-size:13px; margin-top:16px; letter-spacing:3px; position:relative; z-index:2;">
+                    до старта продаж
+                </p>
+            </div>
+        </div>
+
+        <!-- === РАЗДЕЛИТЕЛЬ 2 (уже не нужен перед каталогом, но оставлю для красоты) === -->
+        <div class="divider">
+            <span class="line"></span>
+            <span class="heart">❤️</span>
+            <span class="line"></span>
+        </div>
+
+        <!-- КАТАЛОГ -->
         <section id="catalog">
             <h2 class="section-title">Каталог VarVana</h2>
             <p style="color:#aaa; text-align:center; max-width:500px; margin:-20px auto 30px; font-size:14px;">Премиальные вещи с золотым акцентом — для тех, кто ценит стиль и качество.</p>
 
             <div class="products-grid">
-                <!-- 1. Поло Gold Classic -->
-                <div class="product-card">
-                    <div class="prod-img-placeholder">
-                        <div class="placeholder-brand">VarVana</div>
-                        <div class="placeholder-icon">✦</div>
-                        <div class="placeholder-text">Gold Classic</div>
-                        <div class="placeholder-label">Поло</div>
-                    </div>
-                    <h3 class="prod-title">Поло «Gold Classic»<br><span style="color:var(--gold); font-size:13px;">чёрное, золотая вышивка</span></h3>
-                    <span class="prod-price">6 500 ₽</span>
-                    <p class="prod-desc">Классическое поло из плотного хлопка с золотой вышивкой логотипа на груди.</p>
-                    <div class="prod-sizes"><strong>Размеры:</strong> S, M, L, XL</div>
-                    <button class="buy-btn" onclick="addToCart('polo_gold_classic')">В корзину</button>
-                </div>
-
-                <!-- 2. Поло White Classic -->
-                <div class="product-card">
-                    <div class="prod-img-placeholder">
-                        <div class="placeholder-brand">VarVana</div>
-                        <div class="placeholder-icon">✦</div>
-                        <div class="placeholder-text">White Classic</div>
-                        <div class="placeholder-label">Поло</div>
-                    </div>
-                    <h3 class="prod-title">Поло «White Classic»<br><span style="color:var(--gold); font-size:13px;">белое, золотая вышивка</span></h3>
-                    <span class="prod-price">6 500 ₽</span>
-                    <p class="prod-desc">Белое классическое поло с золотой вышивкой логотипа на груди.</p>
-                    <div class="prod-sizes"><strong>Размеры:</strong> S, M, L, XL</div>
-                    <button class="buy-btn" onclick="addToCart('polo_white_classic')">В корзину</button>
-                </div>
-
-                <!-- 3. Свитшот Gold Code (чёрный) -->
-                <div class="product-card">
-                    <div class="prod-img-placeholder">
-                        <div class="placeholder-brand">VarVana</div>
-                        <div class="placeholder-icon">✦</div>
-                        <div class="placeholder-text">Gold Code</div>
-                        <div class="placeholder-label">Свитшот</div>
-                    </div>
-                    <h3 class="prod-title">Свитшот «Gold Code»<br><span style="color:var(--gold); font-size:13px;">чёрный, золотой принт</span></h3>
-                    <span class="prod-price">8 900 ₽</span>
-                    <p class="prod-desc">Свободный свитшот из мягкого футера с золотым принтом на груди.</p>
-                    <div class="prod-sizes"><strong>Размеры:</strong> S, M, L, XL</div>
-                    <button class="buy-btn" onclick="addToCart('sweatshirt_gold_code')">В корзину</button>
-                </div>
-
-                <!-- 4. Свитшот White Code (белый) -->
-                <div class="product-card">
-                    <div class="prod-img-placeholder">
-                        <div class="placeholder-brand">VarVana</div>
-                        <div class="placeholder-icon">✦</div>
-                        <div class="placeholder-text">White Code</div>
-                        <div class="placeholder-label">Свитшот</div>
-                    </div>
-                    <h3 class="prod-title">Свитшот «White Code»<br><span style="color:var(--gold); font-size:13px;">белый, золотой принт</span></h3>
-                    <span class="prod-price">8 900 ₽</span>
-                    <p class="prod-desc">Белый свитшот из мягкого футера с золотым принтом на груди.</p>
-                    <div class="prod-sizes"><strong>Размеры:</strong> S, M, L, XL</div>
-                    <button class="buy-btn" onclick="addToCart('sweatshirt_white_code')">В корзину</button>
-                </div>
-
-                <!-- 5. Толстовка Royal Fleece (чёрная) -->
-                <div class="product-card">
-                    <div class="prod-img-placeholder">
-                        <div class="placeholder-brand">VarVana</div>
-                        <div class="placeholder-icon">✦</div>
-                        <div class="placeholder-text">Royal Fleece</div>
-                        <div class="placeholder-label">Толстовка</div>
-                    </div>
-                    <h3 class="prod-title">Толстовка «Royal Fleece»<br><span style="color:var(--gold); font-size:13px;">чёрная, золотая вышивка</span></h3>
-                    <span class="prod-price">9 900 ₽</span>
-                    <p class="prod-desc">Тёплая толстовка из флиса с капюшоном и золотой вышивкой логотипа.</p>
-                    <div class="prod-sizes"><strong>Размеры:</strong> S, M, L, XL</div>
-                    <button class="buy-btn" onclick="addToCart('hoodie_royal_fleece')">В корзину</button>
-                </div>
-
-                <!-- 6. Толстовка White Fleece (белая) -->
-                <div class="product-card">
-                    <div class="prod-img-placeholder">
-                        <div class="placeholder-brand">VarVana</div>
-                        <div class="placeholder-icon">✦</div>
-                        <div class="placeholder-text">White Fleece</div>
-                        <div class="placeholder-label">Толстовка</div>
-                    </div>
-                    <h3 class="prod-title">Толстовка «White Fleece»<br><span style="color:var(--gold); font-size:13px;">белая, золотая вышивка</span></h3>
-                    <span class="prod-price">9 900 ₽</span>
-                    <p class="prod-desc">Белая толстовка из флиса с капюшоном и золотой вышивкой логотипа.</p>
-                    <div class="prod-sizes"><strong>Размеры:</strong> S, M, L, XL</div>
-                    <button class="buy-btn" onclick="addToCart('hoodie_white_fleece')">В корзину</button>
-                </div>
-
-                <!-- 7. Футболка Black Gold -->
-                <div class="product-card">
-                    <div class="prod-img-placeholder">
-                        <div class="placeholder-brand">VarVana</div>
-                        <div class="placeholder-icon">✦</div>
-                        <div class="placeholder-text">Black Gold</div>
-                        <div class="placeholder-label">Футболка</div>
-                    </div>
-                    <h3 class="prod-title">Футболка «Black Gold»<br><span style="color:var(--gold); font-size:13px;">чёрная, золотой логотип</span></h3>
-                    <span class="prod-price">4 500 ₽</span>
-                    <p class="prod-desc">Базовая футболка из премиального хлопка с золотым логотипом на груди.</p>
-                    <div class="prod-sizes"><strong>Размеры:</strong> XS, S, M, L, XL</div>
-                    <button class="buy-btn" onclick="addToCart('tshirt_black_gold')">В корзину</button>
-                </div>
-
-                <!-- 8. Футболка White Gold -->
-                <div class="product-card">
-                    <div class="prod-img-placeholder">
-                        <div class="placeholder-brand">VarVana</div>
-                        <div class="placeholder-icon">✦</div>
-                        <div class="placeholder-text">White Gold</div>
-                        <div class="placeholder-label">Футболка</div>
-                    </div>
-                    <h3 class="prod-title">Футболка «White Gold»<br><span style="color:var(--gold); font-size:13px;">белая, золотой логотип</span></h3>
-                    <span class="prod-price">4 500 ₽</span>
-                    <p class="prod-desc">Белая футболка из премиального хлопка с золотым логотипом на груди.</p>
-                    <div class="prod-sizes"><strong>Размеры:</strong> XS, S, M, L, XL</div>
-                    <button class="buy-btn" onclick="addToCart('tshirt_white_gold')">В корзину</button>
-                </div>
-
-                <!-- 9. Футболка Urban Edge -->
-                <div class="product-card">
-                    <div class="prod-img-placeholder">
-                        <div class="placeholder-brand">VarVana</div>
-                        <div class="placeholder-icon">✦</div>
-                        <div class="placeholder-text">Urban Edge</div>
-                        <div class="placeholder-label">Футболка</div>
-                    </div>
-                    <h3 class="prod-title">Футболка «Urban Edge»<br><span style="color:var(--gold); font-size:13px;">чёрная, принт на груди</span></h3>
-                    <span class="prod-price">4 900 ₽</span>
-                    <p class="prod-desc">Свободная футболка с графическим принтом на груди. Для смелых и стильных.</p>
-                    <div class="prod-sizes"><strong>Размеры:</strong> S, M, L, XL</div>
-                    <button class="buy-btn" onclick="addToCart('tshirt_urban_edge')">В корзину</button>
-                </div>
-
-                <!-- 10. Футболка Midnight Code -->
-                <div class="product-card">
-                    <div class="prod-img-placeholder">
-                        <div class="placeholder-brand">VarVana</div>
-                        <div class="placeholder-icon">✦</div>
-                        <div class="placeholder-text">Midnight Code</div>
-                        <div class="placeholder-label">Футболка</div>
-                    </div>
-                    <h3 class="prod-title">Футболка «Midnight Code»<br><span style="color:var(--gold); font-size:13px;">чёрная, золотой текст</span></h3>
-                    <span class="prod-price">4 900 ₽</span>
-                    <p class="prod-desc">Футболка с лаконичным золотым текстом на груди. Строгость и характер.</p>
-                    <div class="prod-sizes"><strong>Размеры:</strong> S, M, L, XL</div>
-                    <button class="buy-btn" onclick="addToCart('tshirt_midnight_code')">В корзину</button>
-                </div>
-
-                <!-- 11. Лонгслив Soft Line (чёрный) -->
-                <div class="product-card">
-                    <div class="prod-img-placeholder">
-                        <div class="placeholder-brand">VarVana</div>
-                        <div class="placeholder-icon">✦</div>
-                        <div class="placeholder-text">Soft Line</div>
-                        <div class="placeholder-label">Лонгслив</div>
-                    </div>
-                    <h3 class="prod-title">Лонгслив «Soft Line»<br><span style="color:var(--gold); font-size:13px;">чёрный, золотой принт</span></h3>
-                    <span class="prod-price">5 500 ₽</span>
-                    <p class="prod-desc">Тонкий трикотажный лонгслив с золотым принтом на груди. Идеален для слоёв.</p>
-                    <div class="prod-sizes"><strong>Размеры:</strong> XS, S, M, L</div>
-                    <button class="buy-btn" onclick="addToCart('longsleeve_soft_line')">В корзину</button>
-                </div>
-
-                <!-- 12. Лонгслив White Line (белый) -->
-                <div class="product-card">
-                    <div class="prod-img-placeholder">
-                        <div class="placeholder-brand">VarVana</div>
-                        <div class="placeholder-icon">✦</div>
-                        <div class="placeholder-text">White Line</div>
-                        <div class="placeholder-label">Лонгслив</div>
-                    </div>
-                    <h3 class="prod-title">Лонгслив «White Line»<br><span style="color:var(--gold); font-size:13px;">белый, золотой принт</span></h3>
-                    <span class="prod-price">5 500 ₽</span>
-                    <p class="prod-desc">Белый тонкий лонгслив с золотым принтом на груди.</p>
-                    <div class="prod-sizes"><strong>Размеры:</strong> XS, S, M, L</div>
-                    <button class="buy-btn" onclick="addToCart('longsleeve_white_line')">В корзину</button>
-                </div>
-
-                <!-- 13. Лонгслив Gold Sleeve (чёрный) -->
-                <div class="product-card">
-                    <div class="prod-img-placeholder">
-                        <div class="placeholder-brand">VarVana</div>
-                        <div class="placeholder-icon">✦</div>
-                        <div class="placeholder-text">Gold Sleeve</div>
-                        <div class="placeholder-label">Лонгслив</div>
-                    </div>
-                    <h3 class="prod-title">Лонгслив «Gold Sleeve»<br><span style="color:var(--gold); font-size:13px;">чёрный, золотая строчка</span></h3>
-                    <span class="prod-price">6 200 ₽</span>
-                    <p class="prod-desc">Чёрный лонгслив с золотой строчкой по рукаву и маленьким логотипом.</p>
-                    <div class="prod-sizes"><strong>Размеры:</strong> XS, S, M, L</div>
-                    <button class="buy-btn" onclick="addToCart('longsleeve_gold_sleeve')">В корзину</button>
-                </div>
-
-                <!-- 14. Брюки Gold Wide (чёрные) -->
-                <div class="product-card">
-                    <div class="prod-img-placeholder">
-                        <div class="placeholder-brand">VarVana</div>
-                        <div class="placeholder-icon">✦</div>
-                        <div class="placeholder-text">Gold Wide</div>
-                        <div class="placeholder-label">Брюки</div>
-                    </div>
-                    <h3 class="prod-title">Брюки широкие «Gold Wide»<br><span style="color:var(--gold); font-size:13px;">чёрные, золотая строчка</span></h3>
-                    <span class="prod-price">8 500 ₽</span>
-                    <p class="prod-desc">Свободные брюки с золотой строчкой по бокам и идеальной посадкой.</p>
-                    <div class="prod-sizes"><strong>Размеры:</strong> XS, S, M, L</div>
-                    <button class="buy-btn" onclick="addToCart('pants_gold_wide')">В корзину</button>
-                </div>
-
-                <!-- 15. Брюки Gold Flared (чёрные) -->
-                <div class="product-card">
-                    <div class="prod-img-placeholder">
-                        <div class="placeholder-brand">VarVana</div>
-                        <div class="placeholder-icon">✦</div>
-                        <div class="placeholder-text">Gold Flared</div>
-                        <div class="placeholder-label">Брюки</div>
-                    </div>
-                    <h3 class="prod-title">Брюки клёш «Gold Flared»<br><span style="color:var(--gold); font-size:13px;">чёрные, золотая строчка</span></h3>
-                    <span class="prod-price">8 500 ₽</span>
-                    <p class="prod-desc">Брюки клёш с золотой строчкой по бокам. Элегантность и стиль.</p>
-                    <div class="prod-sizes"><strong>Размеры:</strong> XS, S, M, L</div>
-                    <button class="buy-btn" onclick="addToCart('pants_gold_flared')">В корзину</button>
-                </div>
-
-                <!-- 16. Бомбер Night Gold -->
+                <!-- Товар 1: Бомбер Night Gold -->
                 <div class="product-card">
                     <div class="prod-img-placeholder">
                         <div class="placeholder-brand">VarVana</div>
@@ -1507,7 +1474,7 @@
                     <button class="buy-btn" onclick="addToCart('bomber_night_gold')">В корзину</button>
                 </div>
 
-                <!-- 17. Кроссовки Golden Lady -->
+                <!-- 2. Кроссовки Golden Lady -->
                 <div class="product-card">
                     <div class="prod-img-placeholder">
                         <div class="placeholder-brand">VarVana</div>
@@ -1522,7 +1489,7 @@
                     <button class="buy-btn" onclick="addToCart('sneakers_golden_lady')">В корзину</button>
                 </div>
 
-                <!-- 18. Кроссовки White Silver -->
+                <!-- 3. Кроссовки White Silver -->
                 <div class="product-card">
                     <div class="prod-img-placeholder">
                         <div class="placeholder-brand">VarVana</div>
@@ -1537,7 +1504,7 @@
                     <button class="buy-btn" onclick="addToCart('sneakers_white_silver')">В корзину</button>
                 </div>
 
-                <!-- 19. Туфли Gold Loafers (чёрные) -->
+                <!-- 4. Туфли Gold Loafers -->
                 <div class="product-card">
                     <div class="prod-img-placeholder">
                         <div class="placeholder-brand">VarVana</div>
@@ -1552,7 +1519,7 @@
                     <button class="buy-btn" onclick="addToCart('loafers_gold')">В корзину</button>
                 </div>
 
-                <!-- 20. Туфли White Loafers (белые) -->
+                <!-- 5. Туфли White Loafers -->
                 <div class="product-card">
                     <div class="prod-img-placeholder">
                         <div class="placeholder-brand">VarVana</div>
@@ -1567,7 +1534,97 @@
                     <button class="buy-btn" onclick="addToCart('loafers_white')">В корзину</button>
                 </div>
 
-                <!-- 21. Сумка-мессенджер Cross Gold -->
+                <!-- 6. Толстовка Royal Fleece -->
+                <div class="product-card">
+                    <div class="prod-img-placeholder">
+                        <div class="placeholder-brand">VarVana</div>
+                        <div class="placeholder-icon">✦</div>
+                        <div class="placeholder-text">Royal Fleece</div>
+                        <div class="placeholder-label">Толстовка</div>
+                    </div>
+                    <h3 class="prod-title">Толстовка «Royal Fleece»<br><span style="color:var(--gold); font-size:13px;">чёрная, золотая вышивка</span></h3>
+                    <span class="prod-price">9 900 ₽</span>
+                    <p class="prod-desc">Тёплая толстовка из флиса с капюшоном и золотой вышивкой логотипа.</p>
+                    <div class="prod-sizes"><strong>Размеры:</strong> S, M, L, XL</div>
+                    <button class="buy-btn" onclick="addToCart('hoodie_royal_fleece')">В корзину</button>
+                </div>
+
+                <!-- 7. Толстовка White Fleece -->
+                <div class="product-card">
+                    <div class="prod-img-placeholder">
+                        <div class="placeholder-brand">VarVana</div>
+                        <div class="placeholder-icon">✦</div>
+                        <div class="placeholder-text">White Fleece</div>
+                        <div class="placeholder-label">Толстовка</div>
+                    </div>
+                    <h3 class="prod-title">Толстовка «White Fleece»<br><span style="color:var(--gold); font-size:13px;">белая, золотая вышивка</span></h3>
+                    <span class="prod-price">9 900 ₽</span>
+                    <p class="prod-desc">Белая толстовка из флиса с капюшоном и золотой вышивкой логотипа.</p>
+                    <div class="prod-sizes"><strong>Размеры:</strong> S, M, L, XL</div>
+                    <button class="buy-btn" onclick="addToCart('hoodie_white_fleece')">В корзину</button>
+                </div>
+
+                <!-- 8. Свитшот Gold Code -->
+                <div class="product-card">
+                    <div class="prod-img-placeholder">
+                        <div class="placeholder-brand">VarVana</div>
+                        <div class="placeholder-icon">✦</div>
+                        <div class="placeholder-text">Gold Code</div>
+                        <div class="placeholder-label">Свитшот</div>
+                    </div>
+                    <h3 class="prod-title">Свитшот «Gold Code»<br><span style="color:var(--gold); font-size:13px;">чёрный, золотой принт</span></h3>
+                    <span class="prod-price">8 900 ₽</span>
+                    <p class="prod-desc">Свободный свитшот из мягкого футера с золотым принтом на груди.</p>
+                    <div class="prod-sizes"><strong>Размеры:</strong> S, M, L, XL</div>
+                    <button class="buy-btn" onclick="addToCart('sweatshirt_gold_code')">В корзину</button>
+                </div>
+
+                <!-- 9. Свитшот White Code -->
+                <div class="product-card">
+                    <div class="prod-img-placeholder">
+                        <div class="placeholder-brand">VarVana</div>
+                        <div class="placeholder-icon">✦</div>
+                        <div class="placeholder-text">White Code</div>
+                        <div class="placeholder-label">Свитшот</div>
+                    </div>
+                    <h3 class="prod-title">Свитшот «White Code»<br><span style="color:var(--gold); font-size:13px;">белый, золотой принт</span></h3>
+                    <span class="prod-price">8 900 ₽</span>
+                    <p class="prod-desc">Белый свитшот из мягкого футера с золотым принтом на груди.</p>
+                    <div class="prod-sizes"><strong>Размеры:</strong> S, M, L, XL</div>
+                    <button class="buy-btn" onclick="addToCart('sweatshirt_white_code')">В корзину</button>
+                </div>
+
+                <!-- 10. Брюки Gold Wide -->
+                <div class="product-card">
+                    <div class="prod-img-placeholder">
+                        <div class="placeholder-brand">VarVana</div>
+                        <div class="placeholder-icon">✦</div>
+                        <div class="placeholder-text">Gold Wide</div>
+                        <div class="placeholder-label">Брюки</div>
+                    </div>
+                    <h3 class="prod-title">Брюки широкие «Gold Wide»<br><span style="color:var(--gold); font-size:13px;">чёрные, золотая строчка</span></h3>
+                    <span class="prod-price">8 500 ₽</span>
+                    <p class="prod-desc">Свободные брюки с золотой строчкой по бокам и идеальной посадкой.</p>
+                    <div class="prod-sizes"><strong>Размеры:</strong> XS, S, M, L</div>
+                    <button class="buy-btn" onclick="addToCart('pants_gold_wide')">В корзину</button>
+                </div>
+
+                <!-- 11. Брюки Gold Flared -->
+                <div class="product-card">
+                    <div class="prod-img-placeholder">
+                        <div class="placeholder-brand">VarVana</div>
+                        <div class="placeholder-icon">✦</div>
+                        <div class="placeholder-text">Gold Flared</div>
+                        <div class="placeholder-label">Брюки</div>
+                    </div>
+                    <h3 class="prod-title">Брюки клёш «Gold Flared»<br><span style="color:var(--gold); font-size:13px;">чёрные, золотая строчка</span></h3>
+                    <span class="prod-price">8 500 ₽</span>
+                    <p class="prod-desc">Брюки клёш с золотой строчкой по бокам. Элегантность и стиль.</p>
+                    <div class="prod-sizes"><strong>Размеры:</strong> XS, S, M, L</div>
+                    <button class="buy-btn" onclick="addToCart('pants_gold_flared')">В корзину</button>
+                </div>
+
+                <!-- 12. Сумка Cross Gold -->
                 <div class="product-card">
                     <div class="prod-img-placeholder">
                         <div class="placeholder-brand">VarVana</div>
@@ -1580,19 +1637,140 @@
                     <p class="prod-desc">Стильная сумка через плечо с золотой фурнитурой и маленьким логотипом.</p>
                     <button class="buy-btn" onclick="addToCart('bag_cross_gold')">В корзину</button>
                 </div>
-            </div>
 
-            <!-- === БЛОК ЛИМИТИРОВАННОГО НАБОРА (вместо старой лимитки) === -->
-            <div style="text-align: center; padding: 60px 20px; margin: 40px 0; border: 2px dashed var(--gold); border-radius: 40px; background: rgba(207, 167, 85, 0.05);">
-                <h2 style="font-size: 36px; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; font-weight: 900;">
-                    ✦ Лимитированный набор VarVana ✦
-                </h2>
-                <p style="color: #aaa; font-size: 18px; max-width: 500px; margin: 20px auto; line-height: 1.6;">
-                    Скоро. Уникальный набор для тех, кто хочет получить максимум стиля.<br>
-                    <span style="color: var(--gold); font-weight: 700;">Следите за новостями.</span>
-                </p>
-                <div style="display: inline-block; padding: 12px 32px; border: 1px solid var(--gold); border-radius: 40px; color: var(--gold); font-weight: 700; letter-spacing: 2px; font-size: 14px; text-transform: uppercase; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);">
-                    Подробности скоро
+                <!-- 13. Поло Gold Classic -->
+                <div class="product-card">
+                    <div class="prod-img-placeholder">
+                        <div class="placeholder-brand">VarVana</div>
+                        <div class="placeholder-icon">✦</div>
+                        <div class="placeholder-text">Gold Classic</div>
+                        <div class="placeholder-label">Поло</div>
+                    </div>
+                    <h3 class="prod-title">Поло «Gold Classic»<br><span style="color:var(--gold); font-size:13px;">чёрное, золотая вышивка</span></h3>
+                    <span class="prod-price">6 500 ₽</span>
+                    <p class="prod-desc">Классическое поло из плотного хлопка с золотой вышивкой логотипа на груди.</p>
+                    <div class="prod-sizes"><strong>Размеры:</strong> S, M, L, XL</div>
+                    <button class="buy-btn" onclick="addToCart('polo_gold_classic')">В корзину</button>
+                </div>
+
+                <!-- 14. Поло White Classic -->
+                <div class="product-card">
+                    <div class="prod-img-placeholder">
+                        <div class="placeholder-brand">VarVana</div>
+                        <div class="placeholder-icon">✦</div>
+                        <div class="placeholder-text">White Classic</div>
+                        <div class="placeholder-label">Поло</div>
+                    </div>
+                    <h3 class="prod-title">Поло «White Classic»<br><span style="color:var(--gold); font-size:13px;">белое, золотая вышивка</span></h3>
+                    <span class="prod-price">6 500 ₽</span>
+                    <p class="prod-desc">Белое классическое поло с золотой вышивкой логотипа на груди.</p>
+                    <div class="prod-sizes"><strong>Размеры:</strong> S, M, L, XL</div>
+                    <button class="buy-btn" onclick="addToCart('polo_white_classic')">В корзину</button>
+                </div>
+
+                <!-- 15. Лонгслив Gold Sleeve -->
+                <div class="product-card">
+                    <div class="prod-img-placeholder">
+                        <div class="placeholder-brand">VarVana</div>
+                        <div class="placeholder-icon">✦</div>
+                        <div class="placeholder-text">Gold Sleeve</div>
+                        <div class="placeholder-label">Лонгслив</div>
+                    </div>
+                    <h3 class="prod-title">Лонгслив «Gold Sleeve»<br><span style="color:var(--gold); font-size:13px;">чёрный, золотая строчка</span></h3>
+                    <span class="prod-price">6 200 ₽</span>
+                    <p class="prod-desc">Чёрный лонгслив с золотой строчкой по рукаву и маленьким логотипом.</p>
+                    <div class="prod-sizes"><strong>Размеры:</strong> XS, S, M, L</div>
+                    <button class="buy-btn" onclick="addToCart('longsleeve_gold_sleeve')">В корзину</button>
+                </div>
+
+                <!-- 16. Лонгслив Soft Line -->
+                <div class="product-card">
+                    <div class="prod-img-placeholder">
+                        <div class="placeholder-brand">VarVana</div>
+                        <div class="placeholder-icon">✦</div>
+                        <div class="placeholder-text">Soft Line</div>
+                        <div class="placeholder-label">Лонгслив</div>
+                    </div>
+                    <h3 class="prod-title">Лонгслив «Soft Line»<br><span style="color:var(--gold); font-size:13px;">чёрный, золотой принт</span></h3>
+                    <span class="prod-price">5 500 ₽</span>
+                    <p class="prod-desc">Тонкий трикотажный лонгслив с золотым принтом на груди.</p>
+                    <div class="prod-sizes"><strong>Размеры:</strong> XS, S, M, L</div>
+                    <button class="buy-btn" onclick="addToCart('longsleeve_soft_line')">В корзину</button>
+                </div>
+
+                <!-- 17. Лонгслив White Line -->
+                <div class="product-card">
+                    <div class="prod-img-placeholder">
+                        <div class="placeholder-brand">VarVana</div>
+                        <div class="placeholder-icon">✦</div>
+                        <div class="placeholder-text">White Line</div>
+                        <div class="placeholder-label">Лонгслив</div>
+                    </div>
+                    <h3 class="prod-title">Лонгслив «White Line»<br><span style="color:var(--gold); font-size:13px;">белый, золотой принт</span></h3>
+                    <span class="prod-price">5 500 ₽</span>
+                    <p class="prod-desc">Белый тонкий лонгслив с золотым принтом на груди.</p>
+                    <div class="prod-sizes"><strong>Размеры:</strong> XS, S, M, L</div>
+                    <button class="buy-btn" onclick="addToCart('longsleeve_white_line')">В корзину</button>
+                </div>
+
+                <!-- 18. Футболка Urban Edge -->
+                <div class="product-card">
+                    <div class="prod-img-placeholder">
+                        <div class="placeholder-brand">VarVana</div>
+                        <div class="placeholder-icon">✦</div>
+                        <div class="placeholder-text">Urban Edge</div>
+                        <div class="placeholder-label">Футболка</div>
+                    </div>
+                    <h3 class="prod-title">Футболка «Urban Edge»<br><span style="color:var(--gold); font-size:13px;">чёрная, принт на груди</span></h3>
+                    <span class="prod-price">4 900 ₽</span>
+                    <p class="prod-desc">Свободная футболка с графическим принтом на груди. Для смелых и стильных.</p>
+                    <div class="prod-sizes"><strong>Размеры:</strong> S, M, L, XL</div>
+                    <button class="buy-btn" onclick="addToCart('tshirt_urban_edge')">В корзину</button>
+                </div>
+
+                <!-- 19. Футболка Midnight Code -->
+                <div class="product-card">
+                    <div class="prod-img-placeholder">
+                        <div class="placeholder-brand">VarVana</div>
+                        <div class="placeholder-icon">✦</div>
+                        <div class="placeholder-text">Midnight Code</div>
+                        <div class="placeholder-label">Футболка</div>
+                    </div>
+                    <h3 class="prod-title">Футболка «Midnight Code»<br><span style="color:var(--gold); font-size:13px;">чёрная, золотой текст</span></h3>
+                    <span class="prod-price">4 900 ₽</span>
+                    <p class="prod-desc">Футболка с лаконичным золотым текстом на груди. Строгость и характер.</p>
+                    <div class="prod-sizes"><strong>Размеры:</strong> S, M, L, XL</div>
+                    <button class="buy-btn" onclick="addToCart('tshirt_midnight_code')">В корзину</button>
+                </div>
+
+                <!-- 20. Футболка Black Gold -->
+                <div class="product-card">
+                    <div class="prod-img-placeholder">
+                        <div class="placeholder-brand">VarVana</div>
+                        <div class="placeholder-icon">✦</div>
+                        <div class="placeholder-text">Black Gold</div>
+                        <div class="placeholder-label">Футболка</div>
+                    </div>
+                    <h3 class="prod-title">Футболка «Black Gold»<br><span style="color:var(--gold); font-size:13px;">чёрная, золотой логотип</span></h3>
+                    <span class="prod-price">4 500 ₽</span>
+                    <p class="prod-desc">Базовая футболка из премиального хлопка с золотым логотипом на груди.</p>
+                    <div class="prod-sizes"><strong>Размеры:</strong> XS, S, M, L, XL</div>
+                    <button class="buy-btn" onclick="addToCart('tshirt_black_gold')">В корзину</button>
+                </div>
+
+                <!-- 21. Футболка White Gold -->
+                <div class="product-card">
+                    <div class="prod-img-placeholder">
+                        <div class="placeholder-brand">VarVana</div>
+                        <div class="placeholder-icon">✦</div>
+                        <div class="placeholder-text">White Gold</div>
+                        <div class="placeholder-label">Футболка</div>
+                    </div>
+                    <h3 class="prod-title">Футболка «White Gold»<br><span style="color:var(--gold); font-size:13px;">белая, золотой логотип</span></h3>
+                    <span class="prod-price">4 500 ₽</span>
+                    <p class="prod-desc">Белая футболка из премиального хлопка с золотым логотипом на груди.</p>
+                    <div class="prod-sizes"><strong>Размеры:</strong> XS, S, M, L, XL</div>
+                    <button class="buy-btn" onclick="addToCart('tshirt_white_gold')">В корзину</button>
                 </div>
             </div>
         </section>
@@ -1779,9 +1957,8 @@
 
     <!-- ===== СКРИПТЫ ===== -->
     <script>
-        // ===== ЗВУК (Web Audio API) =====
+        // ===== ЗВУК =====
         let audioCtx;
-
         function playTone(freq, duration, type = 'sine', volume = 0.15) {
             try {
                 if (!audioCtx) audioCtx = new(window.AudioContext || window.webkitAudioContext)();
@@ -1795,18 +1972,14 @@
                 gain.connect(audioCtx.destination);
                 osc.start();
                 osc.stop(audioCtx.currentTime + duration);
-            } catch (e) { /* тихо падаем, если звук не поддерживается */ }
+            } catch (e) { /* игнорируем */ }
         }
-
         function soundClick() { playTone(1000, 0.1, 'sine', 0.1); }
-
         function soundAdd() { playTone(880, 0.15, 'sine', 0.12);
             setTimeout(() => playTone(1320, 0.12, 'sine', 0.08), 150); }
 
-        // ===== ПРИВЯЗКА ЗВУКА К КЛИКАМ =====
         document.addEventListener('DOMContentLoaded', function() {
-            const clickables = document.querySelectorAll('button, .social-btn, nav a, .contact-placeholder');
-            clickables.forEach(el => {
+            document.querySelectorAll('button, .social-btn, nav a, .contact-placeholder').forEach(el => {
                 el.addEventListener('click', soundClick);
             });
         });
@@ -1829,29 +2002,55 @@
             }
         })();
 
-        // ===== ТОВАРЫ (обновлённые 21 позиция) =====
+        // ===== ТАЙМЕР ДЛЯ ЛИМИТИРОВАННОГО НАБОРА =====
+        function startTimer() {
+            const target = new Date();
+            target.setDate(target.getDate() + 14);
+            target.setHours(0, 0, 0, 0);
+            function update() {
+                const now = new Date();
+                const diff = Math.max(0, Math.floor((target - now) / 1000));
+                const d = Math.floor(diff / 86400);
+                const h = String(Math.floor((diff % 86400) / 3600)).padStart(2, '0');
+                const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+                const s = String(diff % 60).padStart(2, '0');
+                const daysEl = document.getElementById('days');
+                const hoursEl = document.getElementById('hours');
+                const minsEl = document.getElementById('minutes');
+                const secsEl = document.getElementById('seconds');
+                if (daysEl) daysEl.textContent = String(d).padStart(2, '0');
+                if (hoursEl) hoursEl.textContent = h;
+                if (minsEl) minsEl.textContent = m;
+                if (secsEl) secsEl.textContent = s;
+            }
+            update();
+            setInterval(update, 1000);
+        }
+        document.addEventListener('DOMContentLoaded', startTimer);
+
+        // ===== ТОВАРЫ (21 позиция) =====
         const products = {
-            'polo_gold_classic': { name: 'Поло Gold Classic', price: 6500 },
-            'polo_white_classic': { name: 'Поло White Classic', price: 6500 },
-            'sweatshirt_gold_code': { name: 'Свитшот Gold Code', price: 8900 },
-            'sweatshirt_white_code': { name: 'Свитшот White Code', price: 8900 },
-            'hoodie_royal_fleece': { name: 'Толстовка Royal Fleece', price: 9900 },
-            'hoodie_white_fleece': { name: 'Толстовка White Fleece', price: 9900 },
-            'tshirt_black_gold': { name: 'Футболка Black Gold', price: 4500 },
-            'tshirt_white_gold': { name: 'Футболка White Gold', price: 4500 },
-            'tshirt_urban_edge': { name: 'Футболка Urban Edge', price: 4900 },
-            'tshirt_midnight_code': { name: 'Футболка Midnight Code', price: 4900 },
-            'longsleeve_soft_line': { name: 'Лонгслив Soft Line', price: 5500 },
-            'longsleeve_white_line': { name: 'Лонгслив White Line', price: 5500 },
-            'longsleeve_gold_sleeve': { name: 'Лонгслив Gold Sleeve', price: 6200 },
-            'pants_gold_wide': { name: 'Брюки Gold Wide', price: 8500 },
-            'pants_gold_flared': { name: 'Брюки Gold Flared', price: 8500 },
             'bomber_night_gold': { name: 'Бомбер Night Gold', price: 14900 },
             'sneakers_golden_lady': { name: 'Кроссовки Golden Lady', price: 12900 },
             'sneakers_white_silver': { name: 'Кроссовки White Silver', price: 12900 },
             'loafers_gold': { name: 'Туфли Gold Loafers', price: 10900 },
             'loafers_white': { name: 'Туфли White Loafers', price: 10900 },
-            'bag_cross_gold': { name: 'Сумка-мессенджер Cross Gold', price: 6900 }
+            'hoodie_royal_fleece': { name: 'Толстовка Royal Fleece', price: 9900 },
+            'hoodie_white_fleece': { name: 'Толстовка White Fleece', price: 9900 },
+            'sweatshirt_gold_code': { name: 'Свитшот Gold Code', price: 8900 },
+            'sweatshirt_white_code': { name: 'Свитшот White Code', price: 8900 },
+            'pants_gold_wide': { name: 'Брюки Gold Wide', price: 8500 },
+            'pants_gold_flared': { name: 'Брюки Gold Flared', price: 8500 },
+            'bag_cross_gold': { name: 'Сумка-мессенджер Cross Gold', price: 6900 },
+            'polo_gold_classic': { name: 'Поло Gold Classic', price: 6500 },
+            'polo_white_classic': { name: 'Поло White Classic', price: 6500 },
+            'longsleeve_gold_sleeve': { name: 'Лонгслив Gold Sleeve', price: 6200 },
+            'longsleeve_soft_line': { name: 'Лонгслив Soft Line', price: 5500 },
+            'longsleeve_white_line': { name: 'Лонгслив White Line', price: 5500 },
+            'tshirt_urban_edge': { name: 'Футболка Urban Edge', price: 4900 },
+            'tshirt_midnight_code': { name: 'Футболка Midnight Code', price: 4900 },
+            'tshirt_black_gold': { name: 'Футболка Black Gold', price: 4500 },
+            'tshirt_white_gold': { name: 'Футболка White Gold', price: 4500 }
         };
 
         let cart = [];
@@ -2011,7 +2210,6 @@
             }
         });
 
-        // ===== ИНИЦИАЛИЗАЦИЯ =====
         document.addEventListener('DOMContentLoaded', function() {
             updateCartUI();
         });
